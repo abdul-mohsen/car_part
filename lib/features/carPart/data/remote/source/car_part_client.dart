@@ -9,32 +9,23 @@ class CarPartClient implements CarPartRemote {
   final api = Modular.get<DioClient>();
 
   @override
-  Future<DataResult<List<ApiCarPartAutoCompleteItem>>>
-      getCarPartAutoCompleteList(String oemNumber) async {
-    try {
-      return await api.dio
+  Future<DataResult<ApiCarPartAutoComplete>> getCarPartAutoCompleteList(
+          String oemNumber) =>
+      api.dio
           .getCarPartAutoCompleteList(oemNumber, 0, 10)
-          .then((value) => handleApi1(value.data))
+          .then((value) => handlegetCarPartAutoCompleteListApi(value.data))
           .onError((error, stackTrace) => DataResult.failure(GenericFailure()));
-    } catch (error) {
-      return DataResult.failure(errorMapper(error));
-    }
-  }
 }
 
-DataResult<List<ApiCarPartAutoCompleteItem>> handleApi1(
+DataResult<ApiCarPartAutoComplete> handlegetCarPartAutoCompleteListApi(
     Map<String, dynamic>? data) {
   if (data != null) {
-    return handleApi(ApiCarPartAutoComplete.fromJson(data));
-  } else {
-    return DataResult.failure(GenericFailure());
-  }
-}
-
-DataResult<List<ApiCarPartAutoCompleteItem>> handleApi(
-    ApiCarPartAutoComplete? value) {
-  if (value != null && value.data != null) {
-    return DataResult.success(value.data!);
+    final toObject = ApiCarPartAutoComplete.fromJson(data);
+    if (toObject.data != null) {
+      return DataResult.success(toObject);
+    } else {
+      return DataResult.failure(GenericFailure());
+    }
   } else {
     return DataResult.failure(GenericFailure());
   }

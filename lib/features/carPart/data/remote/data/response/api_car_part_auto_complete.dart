@@ -4,7 +4,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'api_car_part_auto_complete.g.dart';
 
 @JsonSerializable(explicitToJson: true)
-class ApiCarPartAutoComplete extends Equatable {
+class ApiCarPartAutoComplete {
   @JsonKey(name: "data")
   final List<ApiCarPartAutoCompleteItem>? data;
 
@@ -14,24 +14,10 @@ class ApiCarPartAutoComplete extends Equatable {
       _$ApiCarPartAutoCompleteFromJson(json);
 
   Map<String, dynamic> toJson() => _$ApiCarPartAutoCompleteToJson(this);
-
-  ApiCarPartAutoComplete copyWith({
-    List<ApiCarPartAutoCompleteItem>? data,
-  }) {
-    return ApiCarPartAutoComplete(
-      data: data ?? this.data,
-    );
-  }
-
-  @override
-  bool get stringify => true;
-
-  @override
-  List<Object?> get props => [data];
 }
 
 @JsonSerializable(explicitToJson: true)
-class ApiCarPartAutoCompleteItem extends Equatable {
+class ApiCarPartAutoCompleteItem {
   @JsonKey(name: "id")
   final int? id;
   @JsonKey(name: "oemNumber")
@@ -43,20 +29,4 @@ class ApiCarPartAutoCompleteItem extends Equatable {
       _$ApiCarPartAutoCompleteItemFromJson(json);
 
   Map<String, dynamic> toJson() => _$ApiCarPartAutoCompleteItemToJson(this);
-
-  ApiCarPartAutoCompleteItem copyWith({
-    int? id,
-    String? oemNumber,
-  }) {
-    return ApiCarPartAutoCompleteItem(
-      id: id ?? this.id,
-      oemNumber: oemNumber ?? this.oemNumber,
-    );
-  }
-
-  @override
-  bool get stringify => true;
-
-  @override
-  List<Object?> get props => [id, oemNumber];
 }

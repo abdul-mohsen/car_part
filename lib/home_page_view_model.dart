@@ -1,6 +1,7 @@
+import 'package:car_part/commen/extention/debug.dart';
 import 'package:car_part/commen/routing/route.dart';
 import 'package:car_part/commen/ui/view_model.dart';
-import 'package:car_part/features/carPart/data/remote/source/car_part_client.dart';
+import 'package:car_part/features/carPart/data/repository/car_part_repository.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -35,10 +36,12 @@ class HomePageViewModel extends ViewModel {
   final _routesSubject = PublishSubject<AppRouteSpec>();
   Stream<AppRouteSpec> get routes => _routesSubject;
 
-  final client = Modular.get<CarPartClient>();
+  final client = Modular.get<CarPartRepository>();
 
   void plusButtonTapped() {
-    client.getCarPartAutoCompleteList("26300-02503");
+    client.getCarPartAutoCompletelist("26300-02503").listen((event) {
+      debug("ssda $event");
+    });
     _updateState(_stateSubject.value.count + 1);
   }
 
