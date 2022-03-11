@@ -1,6 +1,6 @@
-import 'package:car_part/commen/extention/debug.dart';
-import 'package:car_part/commen/routing/route.dart';
-import 'package:car_part/commen/ui/view_model.dart';
+import 'package:car_part/common/extention/debug.dart';
+import 'package:car_part/common/routing/route.dart';
+import 'package:car_part/common/ui/view_model.dart';
 import 'package:car_part/features/carPart/data/repository/car_part_repository.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:rxdart/rxdart.dart';
@@ -33,9 +33,6 @@ class HomePageViewModel extends ViewModel {
   final _stateSubject = BehaviorSubject<HomePageState>.seeded(HomePageState());
   Stream<HomePageState> get state => _stateSubject;
 
-  final _routesSubject = PublishSubject<AppRouteSpec>();
-  Stream<AppRouteSpec> get routes => _routesSubject;
-
   final client = Modular.get<CarPartRepository>();
 
   void plusButtonTapped() {
@@ -50,7 +47,7 @@ class HomePageViewModel extends ViewModel {
   }
 
   void secondPageButtonTapped() {
-    _routesSubject.add(
+    addToNavigation(
       AppRouteSpec(
         name: '/second',
         arguments: {
@@ -73,7 +70,7 @@ class HomePageViewModel extends ViewModel {
 
   @override
   void dispose() {
+    super.dispose();
     _stateSubject.close();
-    _routesSubject.close();
   }
 }

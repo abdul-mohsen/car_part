@@ -1,5 +1,5 @@
-import 'package:car_part/commen/network/dio_intercepter.dart';
-import 'package:car_part/commen/network/end_point.dart';
+import 'package:car_part/common/network/dio_intercepter.dart';
+import 'package:car_part/common/network/end_point.dart';
 import 'package:dio/dio.dart';
 
 class DioClient {

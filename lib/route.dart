@@ -6,7 +6,7 @@ import 'package:car_part/home_page_view.dart';
 import 'package:car_part/home_page_view_model.dart';
 import 'package:flutter/material.dart';
 
-export 'package:car_part/commen/routing/route.dart';
+export 'package:car_part/common/routing/route.dart';
 
 class AppRouter {
   Route<dynamic>? route(RouteSettings settings) {

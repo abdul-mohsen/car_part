@@ -1,10 +1,10 @@
-import 'package:car_part/commen/network/result.dart';
-import 'package:car_part/features/carPart/data/remote/data/response/api_car_part_auto_complete.dart';
-import 'package:car_part/features/carPart/data/remote/source/car_part_remote.dart';
+import 'package:car_part/common/network/result.dart';
+import 'package:car_part/common/extention/any_extention.dart';
+import 'package:car_part/features/carPart/data/remote/model/response/api_car_part_auto_complete.dart';
+import 'package:car_part/features/carPart/data/remote/source/car_part_remote_abs.dart';
 import 'package:car_part/features/carPart/data/repository/car_part_repository_abs.dart';
 import 'package:car_part/features/carPart/data/repository/model/car_part_auto_complete.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:car_part/commen/extention/any_extention.dart';
 
 class CarPartRepository implements ICarPartRepository {
   final remote = Modular.get<CarPartRemote>();

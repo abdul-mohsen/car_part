@@ -1,8 +1,8 @@
-import 'package:car_part/commen/ui/view_model.dart';
+import 'package:car_part/common/ui/view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:logging/logging.dart';
 import 'dart:async';
-import 'package:car_part/commen/routing/route.dart';
+import 'package:car_part/common/routing/route.dart';
 
 final RouteObserver<ModalRoute<void>> routeObserver =
     RouteObserver<ModalRoute<void>>();
@@ -35,6 +35,48 @@ abstract class ViewState<V extends View, VM extends ViewModel> extends State<V>
   void initState() {
     super.initState();
     viewModel.init();
+    listenToRoutesSpecs(viewModel.routes);
+  }
+
+  /// Listens to the stream and automatically routes users according to the
+  /// route spec.
+  StreamSubscription<AppRouteSpec> listenToRoutesSpecs(
+    Stream<AppRouteSpec> routes,
+  ) {
+    return routes.listen((spec) async {
+      switch (spec.action) {
+        case AppRouteAction.pushTo:
+          await Navigator.pushNamed(
+            context,
+            spec.name,
+            arguments: spec.arguments,
+          );
+          break;
+        case AppRouteAction.replaceWith:
+          await Navigator.of(context).pushReplacementNamed(
+            spec.name,
+            arguments: spec.arguments,
+          );
+          break;
+        case AppRouteAction.replaceAllWith:
+          await Navigator.of(context).pushNamedAndRemoveUntil(
+            spec.name,
+            (route) => false,
+            arguments: spec.arguments,
+          );
+          break;
+        case AppRouteAction.pop:
+          Navigator.of(context).pop();
+          break;
+        case AppRouteAction.popUntil:
+          Navigator.of(context)
+              .popUntil((route) => route.settings.name == spec.name);
+          break;
+        case AppRouteAction.popUntilRoot:
+          Navigator.of(context).popUntil((route) => route.isFirst);
+          break;
+      }
+    });
   }
 
   @mustCallSuper
@@ -43,7 +85,9 @@ abstract class ViewState<V extends View, VM extends ViewModel> extends State<V>
     super.didChangeDependencies();
 
     // subscribe for the change of route
-    routeObserver.subscribe(this, ModalRoute.of(context) as PageRoute);
+    if (ModalRoute.of(context) != null) {
+      routeObserver.subscribe(this, ModalRoute.of(context)! as PageRoute);
+    }
   }
 
   /// Called when the top route has been popped off, and the current route
@@ -87,42 +131,5 @@ abstract class ViewState<V extends View, VM extends ViewModel> extends State<V>
     logger.fine('Disposing $runtimeType.');
     viewModel.dispose();
     super.dispose();
-  }
-
-  StreamSubscription<AppRouteSpec> listenToRoutesSpecs(
-      Stream<AppRouteSpec> routes) {
-    return routes.listen((spec) async {
-      switch (spec.action) {
-        case AppRouteAction.pushTo:
-          await Navigator.of(context).pushNamed(
-            spec.name,
-            arguments: spec.arguments,
-          );
-          break;
-        case AppRouteAction.replaceWith:
-          await Navigator.of(context).pushReplacementNamed(
-            spec.name,
-            arguments: spec.arguments,
-          );
-          break;
-        case AppRouteAction.replaceAllWith:
-          await Navigator.of(context).pushNamedAndRemoveUntil(
-            spec.name,
-            (route) => false,
-            arguments: spec.arguments,
-          );
-          break;
-        case AppRouteAction.pop:
-          Navigator.of(context).pop();
-          break;
-        case AppRouteAction.popUntil:
-          Navigator.of(context)
-              .popUntil((route) => route.settings.name == spec.name);
-          break;
-        case AppRouteAction.popUntilRoot:
-          Navigator.of(context).popUntil((route) => route.isFirst);
-          break;
-      }
-    });
   }
 }

@@ -1,8 +1,6 @@
 import 'package:car_part/app_buttom.dart';
-import 'package:car_part/commen/ui/View.dart';
+import 'package:car_part/common/ui/view.dart';
 import 'package:car_part/example/screen_three/screen_three_view_model.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class ThirdPage extends View<ThirdPageViewModel> {
@@ -19,7 +17,6 @@ class _ThirdPageState extends ViewState<ThirdPage, ThirdPageViewModel> {
   @override
   void initState() {
     super.initState();
-    listenToRoutesSpecs(viewModel.routes);
   }
 
   @override

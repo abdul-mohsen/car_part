@@ -1,5 +1,5 @@
-import 'package:car_part/commen/routing/route.dart';
-import 'package:car_part/commen/ui/view_model.dart';
+import 'package:car_part/common/routing/route.dart';
+import 'package:car_part/common/ui/view_model.dart';
 import 'package:rxdart/rxdart.dart';
 
 class SecondPageState {
@@ -23,22 +23,19 @@ class SecondPageViewModel extends ViewModel {
       BehaviorSubject<SecondPageState>.seeded(SecondPageState());
   Stream<SecondPageState> get state => _stateSubject;
 
-  final _routesSubject = PublishSubject<AppRouteSpec>();
-  Stream<AppRouteSpec> get routes => _routesSubject;
-
   SecondPageViewModel({required int count}) {
     _stateSubject.add(SecondPageState(count: count));
   }
 
   void thirdPageButtonTapped() {
-    _routesSubject.add(
+    addToNavigation(
       const AppRouteSpec(name: '/third'),
     );
   }
 
   @override
   void dispose() {
+    super.dispose();
     _stateSubject.close();
-    _routesSubject.close();
   }
 }

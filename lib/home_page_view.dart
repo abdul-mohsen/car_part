@@ -1,5 +1,5 @@
 import 'package:car_part/app_buttom.dart';
-import 'package:car_part/commen/ui/View.dart';
+import 'package:car_part/common/ui/view.dart';
 import 'package:car_part/home_page_view_model.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +17,6 @@ class _HomePageState extends ViewState<HomePage, HomePageViewModel> {
   @override
   void initState() {
     super.initState();
-    listenToRoutesSpecs(viewModel.routes);
   }
 
   @override
