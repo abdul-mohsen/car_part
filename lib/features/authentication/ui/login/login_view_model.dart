@@ -1,4 +1,3 @@
-import 'package:car_part/common/routing/route.dart';
 import 'package:car_part/common/ui/view_model.dart';
 import 'package:car_part/features/authentication/ui/login/data/model/login_view_state.dart';
 import 'package:car_part/features/carPart/data/repository/car_part_repository.dart';
@@ -19,7 +18,7 @@ class LoginViewModel extends ViewModel {
       _viewState.add(_viewState.value.updatePassword(password));
 
   void onLoginPressed() {
-    _viewState.add(_viewState.value.updateLoading());
+    // _viewState.add(_viewState.value.updateLoading());
     // addToNavigation(const AppRouteSpec(
     //   name: '/second',
     //   arguments: {
