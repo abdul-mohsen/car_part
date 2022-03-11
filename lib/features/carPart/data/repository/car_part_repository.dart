@@ -1,5 +1,5 @@
 import 'package:car_part/common/network/result.dart';
-import 'package:car_part/common/extention/any_extention.dart';
+import 'package:car_part/common/extention/any_extension.dart';
 import 'package:car_part/features/carPart/data/remote/model/response/api_car_part_auto_complete.dart';
 import 'package:car_part/features/carPart/data/remote/source/car_part_remote_abs.dart';
 import 'package:car_part/features/carPart/data/repository/car_part_repository_abs.dart';

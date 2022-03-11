@@ -2,6 +2,8 @@ import 'package:car_part/example/screen_three/screen_three_view.dart';
 import 'package:car_part/example/screen_three/screen_three_view_model.dart';
 import 'package:car_part/example/screen_two/screen_two_view.dart';
 import 'package:car_part/example/screen_two/screen_two_view_model.dart';
+import 'package:car_part/features/authentication/ui/login/login_view.dart';
+import 'package:car_part/features/authentication/ui/login/login_view_model.dart';
 import 'package:car_part/home_page_view.dart';
 import 'package:car_part/home_page_view_model.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +16,11 @@ class AppRouter {
 
     switch (settings.name) {
       case '/':
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => LoginView(viewModel: LoginViewModel()),
+        );
+      case '/1':
         return MaterialPageRoute(
           settings: settings,
           builder: (_) => HomePage(viewModel: HomePageViewModel()),

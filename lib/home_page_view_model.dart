@@ -59,13 +59,13 @@ class HomePageViewModel extends ViewModel {
 
   void _updateState(int newCount) {
     final state = _stateSubject.value;
-    _stateSubject.add(
-      state.copyWith(
-        count: newCount,
-        isPlusEnabled: newCount < 5,
-        isMinusEnabled: newCount > 0,
-      ),
-    );
+    // _stateSubject.add(
+    //   state.copyWith(
+    //     count: newCount,
+    //     isPlusEnabled: newCount < 5,
+    //     isMinusEnabled: newCount > 0,
+    //   ),
+    // );
   }
 
   @override

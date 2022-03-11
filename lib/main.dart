@@ -6,7 +6,7 @@ import 'package:car_part/di/repository.dart';
 import 'package:car_part/route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:car_part/common/extention/list_extention.dart';
+import 'package:car_part/common/extention/list_extension.dart';
 import 'package:logging/logging.dart';
 
 void main() {

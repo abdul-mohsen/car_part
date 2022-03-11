@@ -25,9 +25,4 @@ class ThirdPageViewModel extends ViewModel {
       const AppRouteSpec(name: '/second', action: AppRouteAction.popUntil),
     );
   }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
 }
