@@ -6,16 +6,21 @@ import 'package:car_part/features/authentication/data/remote/model/request/login
 import 'package:car_part/features/authentication/data/remote/model/request/refresh_token/api_refresh_token_request.dart';
 import 'package:car_part/features/authentication/data/remote/model/response/login/api_login.dart';
 import 'package:car_part/features/authentication/data/remote/model/response/refresh_token/api_refresh_token.dart';
-import 'package:car_part/features/authentication/data/remote/source/authentcation_remote_abs.dart';
+import 'package:car_part/features/authentication/data/remote/source/authentication_remote.dart';
 import 'package:car_part/features/authentication/data/repository/authentication_repository_abs.dart';
 import 'package:car_part/features/authentication/data/repository/model/Login.dart';
 import 'package:car_part/features/authentication/data/repository/model/refresh_token.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:car_part/common/extention/any_extension.dart';
 
 class AuthenticatoinRepository implements IAuthenticationRepository {
-  final _remote = Modular.get<IAuthenticationRemote>();
+  final _remote = Modular.get<AuthenticationRemote>();
   final _appPref = Modular.get<AppPref>();
+  final int cacheMeterDuration = 5 * 60;
+  final String cacheMeterkey = "REFRESH_TOKEN_CACHE_METER_KEY";
+  bool isRefreshTokenJobActive = false;
+
   @override
   Stream<Result<Login>> login(ApiLoginRequest request) => _remote
       .login(request)
@@ -28,31 +33,38 @@ class AuthenticatoinRepository implements IAuthenticationRepository {
 
   Result<Login> _setUserToken(ResponseResult<Login> domain) {
     domain.either((error) => error, (data) {
-      _appPref.setUserAccessToken(userAccessToken: data.accessToken);
-      _appPref.setUserRefreshToken(userRefreshToken: data.refreshToken);
+      _appPref.setString(AppPref.accessToken, data.accessToken);
+      _appPref.setString(AppPref.refreshToken, data.refreshToken);
       return data;
     });
     return domain.toResult();
   }
 
   @override
-  Stream<Result<RefreshToken>> refreshToken(ApiRefreshTokenRequest request) =>
-      _remote
-          .refreshToken(request)
-          .then((value) =>
-              _setUserAccessToken(handleRemote(value, _apiRefreshTokenMapper)))
-          .onError((error, stackTrace) => Result.Error(null))
-          .asStream();
+  void refreshToken() async {
+    if (isRefreshTokenJobActive) return;
+    isRefreshTokenJobActive = true;
+    final refreshToken = await _appPref.getString(AppPref.refreshToken);
+    final isValid =
+        await _appPref.getCacheMeter(cacheMeterkey, cacheMeterDuration);
+    if (refreshToken != null && isValid == true) {
+      try {
+        final response = await _remote
+            .refreshToken(ApiRefreshTokenRequest(refreshToken: refreshToken));
+        if (response.data != null) {
+          final data = _apiRefreshTokenMapper(response.data!);
+          _appPref.setString(AppPref.accessToken, data.accessToken);
+          _appPref.setCacheMeter(cacheMeterkey);
+        }
+      } on DioError catch (error) {
+        if (error.response?.statusCode == 400) {
+          _appPref.remove(AppPref.refreshToken);
+        }
+      }
+    }
+    isRefreshTokenJobActive = false;
+  }
 
   static RefreshToken _apiRefreshTokenMapper(ApiRefreshToken response) =>
       RefreshToken(response.accessToken.or(""));
-
-  Result<RefreshToken> _setUserAccessToken(
-      ResponseResult<RefreshToken> domain) {
-    domain.either((error) => error, (data) {
-      _appPref.setUserAccessToken(userAccessToken: data.accessToken);
-      return data;
-    });
-    return domain.toResult();
-  }
 }

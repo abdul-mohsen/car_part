@@ -7,19 +7,29 @@ class AppPref {
 
   AppPref();
 
-  Future<String?> getUserAccessToken() => _get(accessToken);
-
-  Future<void> setUserAccessToken({required String userAccessToken}) =>
-      _set(accessToken, userAccessToken);
-
-  Future<String?> getUserRefreshToken() => _get(refreshToken);
-
-  Future<void> setUserRefreshToken({required String userRefreshToken}) =>
-      _set(refreshToken, userRefreshToken);
-
-  Future<String?> _get(String key) =>
+  Future<String?> getString(String key) =>
       _prefs.then((prefs) => prefs.getString(key));
 
-  Future<void> _set(String key, String value) =>
+  Future<int?> getInt(String key) => _prefs.then((prefs) => prefs.getInt(key));
+
+  Future<void> setString(String key, String value) =>
       _prefs.then((prefs) => prefs.setString(key, value));
+
+  Future<bool> setInt(String key, int value) =>
+      _prefs.then((prefs) => prefs.setInt(key, value));
+
+  Future<void> remove(String key) => _prefs.then((prefs) => prefs.remove(key));
+
+  Future<void> setCacheMeter(String key) => setInt(key, now());
+
+  Future<bool> getCacheMeter(String key, int duration) async {
+    int? value = await getInt(key);
+    if (value != null) {
+      return now() - value > duration;
+    } else {
+      return false;
+    }
+  }
+
+  int now() => DateTime.now().toUtc().second;
 }
