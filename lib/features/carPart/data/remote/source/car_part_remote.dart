@@ -1,5 +1,5 @@
 import 'package:car_part/common/network/dio_client.dart';
-import 'package:car_part/common/network/result.dart';
+import 'package:car_part/common/network/response_result.dart';
 import 'package:car_part/features/carPart/data/remote/model/response/api_car_part_auto_complete.dart';
 import 'package:car_part/features/carPart/data/remote/source/car_part_remote_abs.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -9,24 +9,25 @@ class CarPartClient implements CarPartRemote {
   final api = Modular.get<DioClient>();
 
   @override
-  Future<DataResult<ApiCarPartAutoComplete>> getCarPartAutoCompleteList(
+  Future<ResponseResult<ApiCarPartAutoComplete>> getCarPartAutoCompleteList(
           String oemNumber) =>
       api.dio
           .getCarPartAutoCompleteList(oemNumber, 0, 10)
           .then((value) => handlegetCarPartAutoCompleteListApi(value.data))
-          .onError((error, stackTrace) => DataResult.failure(GenericFailure()));
+          .onError(
+              (error, stackTrace) => ResponseResult.failure(GenericFailure()));
 }
 
-DataResult<ApiCarPartAutoComplete> handlegetCarPartAutoCompleteListApi(
+ResponseResult<ApiCarPartAutoComplete> handlegetCarPartAutoCompleteListApi(
     Map<String, dynamic>? data) {
   if (data != null) {
     final toObject = ApiCarPartAutoComplete.fromJson(data);
     if (toObject.data != null) {
-      return DataResult.success(toObject);
+      return ResponseResult.success(toObject);
     } else {
-      return DataResult.failure(GenericFailure());
+      return ResponseResult.failure(GenericFailure());
     }
   } else {
-    return DataResult.failure(GenericFailure());
+    return ResponseResult.failure(GenericFailure());
   }
 }

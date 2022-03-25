@@ -4,7 +4,9 @@ part 'api_login_request.g.dart';
 
 @JsonSerializable()
 class ApiLoginRequest {
+  @JsonKey(name: "username")
   final String? username;
+  @JsonKey(name: "password")
   final String? password;
 
   const ApiLoginRequest({this.username, this.password});

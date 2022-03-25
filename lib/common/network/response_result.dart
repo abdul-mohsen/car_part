@@ -1,7 +1,12 @@
 // The code below was inspired by my swift implementation https://gist.github.com/CassiusPacheco/4378d30d69316e4a6ba28a0c3af72628
 // and Avdosev's Dart Either https://github.com/avdosev/either_dart/blob/master/lib/src/either.dart
 
+import 'package:car_part/common/domain/result.dart';
+import 'package:car_part/common/network/errors/ApiFailure/api_failure.dart';
+import 'package:car_part/common/network/errors/generic_error.dart';
+import 'package:car_part/common/network/errors/network_error.dart';
 import 'package:equatable/equatable.dart';
+import 'package:car_part/common/extention/any_extension.dart';
 
 abstract class Failure extends Equatable implements Exception {
   @override
@@ -9,14 +14,24 @@ abstract class Failure extends Equatable implements Exception {
 
   @override
   List<Object> get props => [];
+
+  String? toAppError() {
+    if (this is ApiFailure) {
+      return to<ApiFailure>()?.message;
+    } else if (this is NetworkError) {
+      return to<NetworkError>()?.message;
+    } else if (this is GenericError) {
+      return to<GenericError>()?.message;
+    }
+    return null;
+  }
 }
 
 // General failures
 class GenericFailure extends Failure {}
 
-class APIFailure extends Failure {}
-
-Failure errorMapper(Object error) => error is Failure ? error : APIFailure();
+Failure errorMapper(Object error) =>
+    error is Failure ? error : GenericFailure();
 
 /// This abstraction contains either a success data of generic type `S` or a
 /// failure error of type `Failure` as its result.
@@ -29,9 +44,10 @@ Failure errorMapper(Object error) => error is Failure ? error : APIFailure();
 /// `error` must only be retrieved when `DataResult` was constructed by using
 /// `DataResult.failure(error)`. It can be validated by calling `isFailure`
 /// first.
-abstract class DataResult<S> extends Equatable {
-  static DataResult<S> failure<S>(Failure failure) => _FailureResult(failure);
-  static DataResult<S> success<S>(S data) => _SuccessResult(data);
+abstract class ResponseResult<S> extends Equatable {
+  static ResponseResult<S> failure<S>(Failure failure) =>
+      _FailureResult(failure);
+  static ResponseResult<S> success<S>(S data) => _SuccessResult(data);
 
   /// Get [error] value, returns null when the value is actually [data]
   Failure? get error => fold<Failure?>((error) => error, (data) => null);
@@ -58,17 +74,17 @@ abstract class DataResult<S> extends Equatable {
   /// Transforms values of [error] and [data] in new a `DataResult` type. Only
   /// the matching function to the object type will be executed. For example,
   /// for a `SuccessResult` object only the [fnData] function will be executed.
-  DataResult<T> either<T>(
+  ResponseResult<T> either<T>(
       Failure Function(Failure error) fnFailure, T Function(S data) fnData);
 
   /// Transforms value of [data] allowing a new `DataResult` to be returned.
   /// A `SuccessResult` might return a `FailureResult` and vice versa.
-  DataResult<T> then<T>(DataResult<T> Function(S data) fnData);
+  ResponseResult<T> then<T>(ResponseResult<T> Function(S data) fnData);
 
   /// Transforms value of [data] always keeping the original identity of the
   /// `DataResult`, meaning that a `SuccessResult` returns a `SuccessResult` and
   /// a `FailureResult` always returns a `FailureResult`.
-  DataResult<T> map<T>(T Function(S data) fnData);
+  ResponseResult<T> map<T>(T Function(S data) fnData);
 
   /// Folds [error] and [data] into the value of one type. Only the matching
   /// function to the object type will be executed. For example, for a
@@ -77,11 +93,19 @@ abstract class DataResult<S> extends Equatable {
 
   @override
   List<Object?> get props => [if (isSuccess) data else error];
+
+  Result<S> toResult() {
+    if (isSuccess) {
+      return Result.Success(data!);
+    } else {
+      return Result.Error(error!.toAppError());
+    }
+  }
 }
 
 /// Success implementation of `DataResult`. It contains `data`. It's abstracted
 /// away by `DataResult`. It shouldn't be used directly in the app.
-class _SuccessResult<S> extends DataResult<S> {
+class _SuccessResult<S> extends ResponseResult<S> {
   final S _value;
 
   _SuccessResult(this._value);
@@ -93,7 +117,7 @@ class _SuccessResult<S> extends DataResult<S> {
   }
 
   @override
-  DataResult<T> then<T>(DataResult<T> Function(S data) fnData) {
+  ResponseResult<T> then<T>(ResponseResult<T> Function(S data) fnData) {
     return fnData(_value);
   }
 
@@ -110,7 +134,7 @@ class _SuccessResult<S> extends DataResult<S> {
 
 /// Failure implementation of `DataResult`. It contains `error`.  It's
 /// abstracted away by `DataResult`. It shouldn't be used directly in the app.
-class _FailureResult<S> extends DataResult<S> {
+class _FailureResult<S> extends ResponseResult<S> {
   final Failure _value;
 
   _FailureResult(this._value);
@@ -127,7 +151,7 @@ class _FailureResult<S> extends DataResult<S> {
   }
 
   @override
-  _FailureResult<T> then<T>(DataResult<T> Function(S data) fnData) {
+  _FailureResult<T> then<T>(ResponseResult<T> Function(S data) fnData) {
     return _FailureResult<T>(_value);
   }
 

@@ -1,13 +1,13 @@
-import 'package:car_part/common/network/result.dart';
+import 'package:car_part/common/network/response_result.dart';
 
-DataResult<T> handleApi<T>(T? data) {
+ResponseResult<T> handleApi<T>(T? data) {
   if (data != null) {
-    return DataResult.success(data);
+    return ResponseResult.success(data);
   } else {
-    return DataResult.failure(GenericFailure());
+    return ResponseResult.failure(GenericFailure());
   }
 }
 
-DataResult<S> handleRemote<T, S>(
-        DataResult<T> api, S Function(T data) mapToDomain) =>
+ResponseResult<S> handleRemote<T, S>(
+        ResponseResult<T> api, S Function(T data) mapToDomain) =>
     api.either((error) => errorMapper(error), (data) => mapToDomain(data));

@@ -3,6 +3,7 @@ import 'package:car_part/common/ui/view.dart';
 import 'package:car_part/di/cache.dart';
 import 'package:car_part/di/remote.dart';
 import 'package:car_part/di/repository.dart';
+import 'package:car_part/di/view_model.dart';
 import 'package:car_part/route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -16,9 +17,9 @@ void main() {
 
 class AppModule extends Module {
   @override
-  List<Bind> get binds => remoteInjection()
-      .addAllAndReturn(cacheInjection())
-      .addAllAndReturn(repositoryInjection());
+  List<Bind> get binds =>
+      remoteInjection().addAllAndReturn(cacheInjection()).addAllAndReturn(
+          repositoryInjection().addAllAndReturn(viewModelInjection()));
   @override
   List<ModularRoute> get routes => [];
 }
