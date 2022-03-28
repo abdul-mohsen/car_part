@@ -52,6 +52,7 @@ dependencies:
   dio: ^4.0.5-beta1
   rxdart: ^0.27.3
   shared_preferences: ^2.0.13
+  rx_shared_preferences: ^2.2.0
   # sqflite: ^2.0.2
 
 

@@ -10,7 +10,7 @@ import 'package:car_part/features/authentication/data/remote/source/authenticati
 import 'package:car_part/common/extention/future_extention.dart';
 
 class AuthenticationRemote implements IAuthenticationRemote {
-  final api = Modular.get<DioClient>();
+  final api = Modular.get<UnauthorizeDioClient>();
 
   @override
   Future<ResponseResult<ApiLogin>> login(ApiLoginRequest request) =>

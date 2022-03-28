@@ -1,11 +1,7 @@
-import 'package:car_part/features/authentication/data/repository/authentication_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 
-class DioInterceptor extends InterceptorsWrapper {
-  final repo = Modular.get<AuthenticatoinRepository>();
-
+class DebugDioIntercepter extends InterceptorsWrapper {
   @override
   Future onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
@@ -37,10 +33,6 @@ class DioInterceptor extends InterceptorsWrapper {
       logPrint('BODY:');
       printAll(err.response?.data.toString());
     }
-
-    // if (err.response?.statusCode == 403 || err.response?.statusCode == 401) {
-    //   repo.refreshToken();
-    // }
 
     logPrint('*** Api Error - End ***:');
     return handler.next(err);

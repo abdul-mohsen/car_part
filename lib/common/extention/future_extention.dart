@@ -6,19 +6,28 @@ import 'package:dio/dio.dart';
 
 extension FutureHandler on Future<Response<Map<String, dynamic>?>> {
   Future<ResponseResult<T>> handleRemote<T>(
-          T Function(Map<String, dynamic>) fromJson) =>
+          T Function(Map<String, dynamic>) fromJson,
+          {bool isList = false}) =>
       then((value) {
         final response = value.data;
         if (response?['data'] != null) {
-          return ResponseResult.success(fromJson(response!['data']));
+          if (isList) {
+            return ResponseResult.success(fromJson(response!));
+          } else {
+            return ResponseResult.success(fromJson(response!['data']));
+          }
         } else {
           return ResponseResult.failure<T>(GenericFailure());
         }
       }).onError((DioError error, stackTrace) {
         switch (error.type) {
           case DioErrorType.response:
-            return ResponseResult.failure<T>(
-                ApiFailure.fromJson(error.response?.data ?? {}));
+            if (error.response?.data is Map<String, dynamic>) {
+              return ResponseResult.failure<T>(
+                  ApiFailure.fromJson(error.response?.data ?? {}));
+            } else {
+              return ResponseResult.failure<T>(GenericFailure());
+            }
           case DioErrorType.connectTimeout:
             return ResponseResult.failure<T>(
                 NetworkError("url is opened timeout"));

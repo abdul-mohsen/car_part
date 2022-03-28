@@ -6,6 +6,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 List<Bind> remoteInjection() {
   return [
     Bind.singleton((i) => DioClient()),
+    Bind.singleton((i) => UnauthorizeDioClient()),
     Bind.singleton((i) => CarPartClient()),
     Bind.singleton((i) => AuthenticationRemote())
   ];

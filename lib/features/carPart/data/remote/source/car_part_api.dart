@@ -5,7 +5,7 @@ extension CarPartApi on Dio {
   Future<Response<Map<String, dynamic>?>> getCarPartAutoCompleteList(
           String oemNumber, int pageNumber, int pageSize) =>
       get(EndPoints.carPartAutoCompelete, queryParameters: {
-        'oemNumber': oemNumber,
+        'keyword': oemNumber,
         'pageNumber': pageNumber,
         'pageSize': pageSize
       });
