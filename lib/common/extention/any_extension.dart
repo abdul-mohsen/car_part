@@ -1,11 +1,5 @@
 extension AnyExtention<T> on T? {
-  T or(T item) {
-    if (this == null) {
-      return item;
-    } else {
-      return this!;
-    }
-  }
+  T or(T item) => this ?? item;
 
   S? to<S>() => _cast(this);
 

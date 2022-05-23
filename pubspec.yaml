@@ -54,6 +54,7 @@ dependencies:
   shared_preferences: ^2.0.13
   rx_shared_preferences: ^2.2.0
   # sqflite: ^2.0.2
+  # flutter_secure_storage: ^5.0.2
 
 
   # The following adds the Cupertino Icons font to your application.

@@ -3,6 +3,7 @@ import 'package:rx_shared_preferences/rx_shared_preferences.dart';
 class AppPref {
   static const String accessToken = "accessToken";
   static const String refreshToken = "refreshToken";
+  static const String storeId = "storeId";
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   RxSharedPreferences? _rxPrefsInstance;
   Future<RxSharedPreferences> get _rxPrefs async {

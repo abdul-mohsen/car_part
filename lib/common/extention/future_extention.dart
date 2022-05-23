@@ -1,3 +1,4 @@
+import 'package:car_part/common/domain/result.dart';
 import 'package:car_part/common/network/errors/ApiFailure/api_failure.dart';
 import 'package:car_part/common/network/errors/generic_error.dart';
 import 'package:car_part/common/network/errors/network_error.dart';
@@ -45,4 +46,41 @@ extension FutureHandler on Future<Response<Map<String, dynamic>?>> {
         }
       }).onError((error, stackTrace) => ResponseResult.failure<T>(
           GenericError(error.toString(), error, stackTrace)));
+
+  Future<ResponseResult<bool>> handleBoolRemote() =>
+      then((value) => ResponseResult.success(true))
+          .onError((DioError error, stackTrace) {
+        switch (error.type) {
+          case DioErrorType.response:
+            if (error.response?.data is Map<String, dynamic>) {
+              return ResponseResult.failure<bool>(
+                  ApiFailure.fromJson(error.response?.data ?? {}));
+            } else {
+              return ResponseResult.failure<bool>(GenericFailure());
+            }
+          case DioErrorType.connectTimeout:
+            return ResponseResult.failure<bool>(
+                NetworkError("url is opened timeout"));
+          case DioErrorType.cancel:
+            return ResponseResult.failure<bool>(
+                NetworkError("the request is cancelled"));
+          case DioErrorType.receiveTimeout:
+            return ResponseResult.failure<bool>(
+                NetworkError("receiving timeout"));
+          case DioErrorType.sendTimeout:
+            return ResponseResult.failure<bool>(
+                NetworkError("url is sent timeout"));
+          default:
+            return ResponseResult.failure<bool>(
+                NetworkError("unkonwn network error"));
+        }
+      }).onError((error, stackTrace) => ResponseResult.failure<bool>(
+              GenericError(error.toString(), error, stackTrace)));
+}
+
+extension FutureRepositoryHandler<T> on Future<T> {
+  Future<Result<R>> handleRepository<R>(R Function(T) fromJson) =>
+      then((value) =>
+              value.toResult().when((error) => error, (data) => fromJson(data)))
+          .onError((error, stackTrace) => Result.Error(null));
 }
