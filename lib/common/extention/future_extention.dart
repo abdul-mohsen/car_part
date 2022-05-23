@@ -78,7 +78,7 @@ extension FutureHandler on Future<Response<Map<String, dynamic>?>> {
               GenericError(error.toString(), error, stackTrace)));
 }
 
-extension FutureRepositoryHandler<T> on Future<T> {
+extension FutureRepositoryHandler<T> on Future<ResponseResult<T>> {
   Future<Result<R>> handleRepository<R>(R Function(T) fromJson) =>
       then((value) =>
               value.toResult().when((error) => error, (data) => fromJson(data)))

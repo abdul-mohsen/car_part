@@ -8,20 +8,11 @@ import 'package:car_part/features/bill/data/remote/model/request/payment_request
 import 'package:car_part/features/bill/data/remote/model/request/bill_request/bill_request.dart';
 import 'package:car_part/features/bill/data/remote/model/response/api_bill_response/api_bill_item.dart';
 import 'package:car_part/features/bill/data/remote/model/response/api_bill_response/api_bill_response.dart';
-import 'package:car_part/features/bill/data/remote/source/bill_remote.dart';
+import 'package:car_part/features/bill/data/remote/source/bill_remote_abs.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class BillRepository implements IBillRepository {
-  final remote = Modular.get<BillRemote>();
-  @override
-  Stream<Result<List<CarPartAutoComplete>>> getCarPartAutoCompletelist(
-          String oemNumber) =>
-      remote
-          .getCarPartAutoCompleteList(oemNumber)
-          .then((value) => value.toResult().when(
-              (error) => error, (data) => apiCarPartAutoCompleteMapper(data)))
-          .onError((error, stackTrace) => Result.Error(null))
-          .asStream();
+  final remote = Modular.get<IBillRemote>();
 
   @override
   Future<Result<bool>> addBill(BillRequest request) =>
