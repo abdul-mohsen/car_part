@@ -1,11 +1,10 @@
 import 'dart:async';
-
 import 'package:car_part/common/cache/app_pref.dart';
 import 'package:car_part/common/extention/debug.dart';
 import 'package:car_part/common/routing/route.dart';
 import 'package:car_part/common/ui/view_model.dart';
 import 'package:car_part/features/authentication/data/remote/model/request/login/api_login_request.dart';
-import 'package:car_part/features/authentication/data/repository/authentication_repository.dart';
+import 'package:car_part/features/authentication/data/repository/authentication_repository_abs.dart';
 import 'package:car_part/features/authentication/ui/login/data/model/login_view_state.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:rxdart/rxdart.dart';
@@ -15,7 +14,7 @@ class LoginViewModel extends ViewModel {
       BehaviorSubject<LoginState>.seeded(LoginState.initViewState());
   Stream<LoginState> get viewState => _viewState;
 
-  final _repo = Modular.get<AuthenticatoinRepository>();
+  final _repo = Modular.get<IAuthenticationRepository>();
   final _appPref = Modular.get<AppPref>();
 
   @override
@@ -29,6 +28,9 @@ class LoginViewModel extends ViewModel {
         );
       } else {
         debug("not log in page");
+        addToNavigation(
+          const AppRouteSpec(name: '/third', action: AppRouteAction.pushTo),
+        );
       }
     });
   }

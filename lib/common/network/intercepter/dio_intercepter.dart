@@ -8,16 +8,20 @@ class DioInterceptor extends InterceptorsWrapper {
   @override
   Future onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
-    String? token = await _appPref.getString(AppPref.accessToken);
-    if (token != null) {
-      options.headers["Authorization"] = "Bearer " + token;
-    }
     bool isValid = await _appPref.getCacheMeter(
         AuthenticatoinRepository.cacheMeterkey,
         AuthenticatoinRepository.cacheMeterDuration);
 
     if (!isValid) {
       _appPref.remove(AppPref.accessToken);
+    }
+
+    String? token = await _appPref
+        .getString(AppPref.accessToken)
+        .asStream()
+        .firstWhere((element) => element != null);
+    if (token != null) {
+      options.headers["Authorization"] = "Bearer " + token;
     }
 
     return handler.next(options);
