@@ -32,4 +32,10 @@ class ThirdPageViewModel extends ViewModel {
   void temp() {
     repo.getCarPartAutoCompletelist("26300-02503");
   }
+
+  void navigateToBills() {
+    addToNavigation(
+      const AppRouteSpec(name: '/bills'),
+    );
+  }
 }

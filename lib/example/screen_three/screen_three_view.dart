@@ -87,6 +87,17 @@ class _ThirdPageState extends ViewState<ThirdPage, ThirdPageViewModel> {
                         ?.copyWith(color: Colors.blue),
                   ),
                 ),
+                const SizedBox(height: 32),
+                AppButton(
+                  onTap: viewModel.navigateToBills,
+                  child: Text(
+                    'navigate to bills',
+                    style: Theme.of(context)
+                        .textTheme
+                        .button
+                        ?.copyWith(color: Colors.blue),
+                  ),
+                ),
               ],
             ),
           ),

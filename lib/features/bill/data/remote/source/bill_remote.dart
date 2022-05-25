@@ -1,6 +1,6 @@
 import 'package:car_part/common/cache/app_pref.dart';
 import 'package:car_part/common/network/dio_client.dart';
-import 'package:car_part/features/bill/data/remote/model/request/payment_request/payment_request..dart';
+import 'package:car_part/features/bill/data/remote/model/request/payment_request/payment_request.dart';
 import 'package:car_part/features/bill/data/remote/model/request/bill_request/bill_request.dart';
 import 'package:car_part/features/bill/data/remote/model/response/api_bill_response/api_bill_item.dart';
 import 'package:car_part/features/bill/data/remote/model/response/api_bill_response/api_bill_response.dart';
@@ -29,7 +29,7 @@ class BillRemote implements IBillRemote {
   @override
   Future<ResponseResult<ApiBillResponse>> getBills(
       int pageNumber, int pageSize, int? state) async {
-    final storeId = await appPref.getInt(AppPref.storeId);
+    final storeId = await appPref.getInt(AppPref.storeId) ?? 1;
     if (storeId == null) throw NullThrownError();
     return api.dio
         .getBills(pageNumber, pageSize, storeId, state)

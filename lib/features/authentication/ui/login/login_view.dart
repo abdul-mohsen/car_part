@@ -1,7 +1,7 @@
 import 'package:car_part/common/routing/route.dart';
 import 'package:car_part/common/ui/loading_dailog.dart';
 import 'package:car_part/common/ui/view.dart';
-import 'package:car_part/common/widget.dart/edit_text.dart';
+import 'package:car_part/common/widget/edit_text.dart';
 import 'package:car_part/features/authentication/ui/login/data/model/login_view_state.dart';
 import 'package:car_part/features/authentication/ui/login/login_view_model.dart';
 import 'package:flutter/material.dart';

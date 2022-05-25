@@ -4,6 +4,8 @@ import 'package:car_part/example/screen_two/screen_two_view.dart';
 import 'package:car_part/example/screen_two/screen_two_view_model.dart';
 import 'package:car_part/features/authentication/ui/login/login_view.dart';
 import 'package:car_part/features/authentication/ui/login/login_view_model.dart';
+import 'package:car_part/features/bill/ui/view/bill_view.dart';
+import 'package:car_part/features/bill/ui/view/bill_view_model.dart';
 import 'package:car_part/home_page_view.dart';
 import 'package:car_part/home_page_view_model.dart';
 import 'package:flutter/material.dart';
@@ -42,6 +44,11 @@ class AppRouter {
         return MaterialPageRoute(
           settings: settings,
           builder: (_) => ThirdPage(viewModel: ThirdPageViewModel()),
+        );
+      case '/bills':
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => BillView(viewModel: BillViewModel()),
         );
       default:
         throw Exception('Route ${settings.name} not implemented');

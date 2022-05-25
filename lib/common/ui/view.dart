@@ -1,3 +1,4 @@
+import 'package:car_part/common/ui/loading_dailog.dart';
 import 'package:car_part/common/ui/view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:logging/logging.dart';
@@ -131,5 +132,18 @@ abstract class ViewState<V extends View, VM extends ViewModel> extends State<V>
     logger.fine('Disposing $runtimeType.');
     viewModel.dispose();
     super.dispose();
+  }
+
+  void showLoading(loading) {
+    // CircularProgressIndicator();
+
+    if (loading == true) {
+      LoadingScreen().show(
+        context: context,
+        text: 'Please wait a moment',
+      );
+    } else if (loading == false) {
+      LoadingScreen().hide();
+    }
   }
 }

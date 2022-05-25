@@ -4,7 +4,7 @@ import 'package:car_part/common/extention/future_extention.dart';
 import 'package:car_part/common/extention/string_extension.dart';
 import 'package:car_part/features/bill/data/domain/model/bill.dart';
 import 'package:car_part/features/bill/data/domain/repository/bill_repository_abs.dart';
-import 'package:car_part/features/bill/data/remote/model/request/payment_request/payment_request..dart';
+import 'package:car_part/features/bill/data/remote/model/request/payment_request/payment_request.dart';
 import 'package:car_part/features/bill/data/remote/model/request/bill_request/bill_request.dart';
 import 'package:car_part/features/bill/data/remote/model/response/api_bill_response/api_bill_item.dart';
 import 'package:car_part/features/bill/data/remote/model/response/api_bill_response/api_bill_response.dart';

@@ -5,3 +5,7 @@ extension AnyExtention<T> on T? {
 
   X? _cast<X>(x) => x is X ? x : null;
 }
+
+extension AnyNonNullExtention<T> on T {
+  void let(void Function(T) fun) => fun(this);
+}

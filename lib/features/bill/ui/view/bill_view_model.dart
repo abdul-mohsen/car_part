@@ -8,29 +8,46 @@ import 'package:car_part/features/bill/ui/view/model/ui_bill_view.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:rxdart/rxdart.dart';
 
-class BullViewModel extends ViewModel {
+class BillViewModel extends ViewModel {
   final _viewState =
       BehaviorSubject<BillViewState>.seeded(BillViewState.initViewState());
   Stream<BillViewState> get viewState => _viewState;
 
   final _repo = Modular.get<IBillRepository>();
+  var pageNumber = 0;
+  static const _pageSize = 10;
+  static const _state = 1;
+  var _listEnd = false;
 
-  void loadBills(int pageNumber) {
+  @override
+  void init() {
+    super.init();
+    loadBills();
+  }
+
+  void loadBills() {
+    if (_listEnd) return;
     _viewState.add(_viewState.value.updateLoading());
-    _repo.getBills(pageNumber, 10, 1).listen((event) {
+    _repo.getBills(pageNumber, _pageSize, _state).listen((event) {
       event.when((error) {
         _viewState.add(_viewState.value.updateError(error));
         return error;
-      },
-          (data) => _viewState.value
-              .updateBills(data.map((e) => _fromDomain(e)).toList()));
+      }, (data) {
+        _viewState.add(_viewState.value
+            .updateBills(data.map((e) => _fromDomain(e)).toList()));
+        pageNumber++;
+        _listEnd = data.length < _pageSize;
+      });
     });
   }
 
   UiBillView _fromDomain(Bill bill) => UiBillView(
       id: bill.id,
-      effectiveDate: bill.effectiveDate,
-      sequenceNumber: bill.sequenceNumber,
+      discount: bill.discount,
+      maintenanceCost: bill.maintenanceCost,
+      note: bill.note,
+      subTotal: bill.subTotal,
+      vat: bill.vat,
       userName: bill.userName,
       userPhoneNumber: bill.userPhoneNumber);
 

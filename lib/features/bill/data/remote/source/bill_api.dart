@@ -1,13 +1,13 @@
 import 'package:car_part/common/network/end_point.dart';
 import 'package:car_part/features/bill/data/remote/model/request/bill_request/bill_request.dart';
-import 'package:car_part/features/bill/data/remote/model/request/payment_request/payment_request..dart';
+import 'package:car_part/features/bill/data/remote/model/request/payment_request/payment_request.dart';
 import 'package:dio/dio.dart';
 
 extension BillApi on Dio {
   Future<Response<Map<String, dynamic>?>> getBills(
           int pageNumber, int pageSize, int storeId, int? state) =>
       get(EndPoints.bills, queryParameters: {
-        'pageNumber': pageNumber,
+        'page': pageNumber,
         'pageSize': pageSize,
         'storeId': storeId,
         'state': state
