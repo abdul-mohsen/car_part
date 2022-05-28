@@ -1,3 +1,4 @@
+import 'package:car_part/common/extention/debug.dart';
 import 'package:rx_shared_preferences/rx_shared_preferences.dart';
 
 class AppPref {
@@ -34,6 +35,8 @@ class AppPref {
 
   Future<bool> getCacheMeter(String key, int duration) async {
     int? value = await getInt(key);
+    debug(value);
+    debug(now());
     if (value != null) {
       return now() - value < duration * 1000;
     } else {

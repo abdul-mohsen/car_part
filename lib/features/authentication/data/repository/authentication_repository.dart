@@ -15,7 +15,7 @@ import 'package:car_part/common/extention/any_extension.dart';
 class AuthenticatoinRepository implements IAuthenticationRepository {
   final _remote = Modular.get<IAuthenticationRemote>();
   final _appPref = Modular.get<AppPref>();
-  static const int cacheMeterDuration = 8 * 60;
+  static const int cacheMeterDuration = 5 * 60;
   static const String cacheMeterkey = "REFRESH_TOKEN_CACHE_METER_KEY";
   bool isRefreshTokenJobActive = false;
 

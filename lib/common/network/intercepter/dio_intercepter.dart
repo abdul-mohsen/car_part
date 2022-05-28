@@ -17,9 +17,9 @@ class DioInterceptor extends InterceptorsWrapper {
     }
 
     String? token = await _appPref
-        .getString(AppPref.accessToken)
-        .asStream()
+        .getStringRx(AppPref.accessToken)
         .firstWhere((element) => element != null);
+
     if (token != null) {
       options.headers["Authorization"] = "Bearer " + token;
     }

@@ -8,4 +8,8 @@ extension AnyExtention<T> on T? {
 
 extension AnyNonNullExtention<T> on T {
   void let(void Function(T) fun) => fun(this);
+  T apply(void Function(T) fun) {
+    fun(this);
+    return this;
+  }
 }
