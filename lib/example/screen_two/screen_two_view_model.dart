@@ -23,9 +23,9 @@ class SecondPageViewModel extends ViewModel {
       BehaviorSubject<SecondPageState>.seeded(SecondPageState());
   Stream<SecondPageState> get state => _stateSubject;
 
-  SecondPageViewModel({required int count}) {
-    _stateSubject.add(SecondPageState(count: count));
-  }
+  // SecondPageViewModel({required int count}) {
+  //   _stateSubject.add(SecondPageState(count: count));
+  // }
 
   void thirdPageButtonTapped() {
     addToNavigation(

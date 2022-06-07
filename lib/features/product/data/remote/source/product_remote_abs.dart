@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:car_part/common/network/response_result.dart';
 import 'package:car_part/features/product/data/remote/model/request/update_product_quentity_request/update_product_quentity_request.dart';
 import 'package:car_part/features/product/data/remote/model/request/update_product_request/update_product_request.dart';

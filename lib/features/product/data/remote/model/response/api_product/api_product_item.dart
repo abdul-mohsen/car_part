@@ -1,4 +1,6 @@
+import 'package:car_part/features/product/data/repository/model/product.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:car_part/common/extention/any_extension.dart';
 
 part 'api_product_item.g.dart';
 
@@ -25,4 +27,10 @@ class ApiProductItem {
       _$ApiProductItemFromJson(json);
 
   Map<String, dynamic> toJson() => _$ApiProductItemToJson(this);
+
+  Product toDomain() => Product(
+      productId: productId.throwIfNull(),
+      partName: partName.throwIfNull(),
+      partNumber: partNumber.throwIfNull(),
+      productPrice: productPrice.throwIfNull());
 }

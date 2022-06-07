@@ -8,10 +8,8 @@ import 'package:car_part/common/routing/route.dart';
 final RouteObserver<ModalRoute<void>> routeObserver =
     RouteObserver<ModalRoute<void>>();
 
-abstract class View<VM extends ViewModel> extends StatefulWidget {
-  final VM viewModel;
-
-  const View.model(this.viewModel, {Key? key}) : super(key: key);
+abstract class View extends StatefulWidget {
+  const View.model({Key? key}) : super(key: key);
 }
 
 abstract class ViewState<V extends View, VM extends ViewModel> extends State<V>
@@ -36,7 +34,6 @@ abstract class ViewState<V extends View, VM extends ViewModel> extends State<V>
   void initState() {
     super.initState();
     viewModel.init();
-    listenToRoutesSpecs(viewModel.routes);
   }
 
   /// Listens to the stream and automatically routes users according to the

@@ -1,12 +1,13 @@
-import 'package:car_part/features/bill/data/domain/model/bill.dart';
+import 'package:car_part/features/bill/data/domain/model/bill_details.dart';
+import 'package:car_part/features/bill/data/remote/model/response/api_bill_details_response/api_bill_product_item.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:car_part/common/extention/any_extension.dart';
 import 'package:car_part/common/extention/string_extension.dart';
 
-part 'api_bill_item.g.dart';
+part 'api_bill_details.g.dart';
 
 @JsonSerializable()
-class ApiBillItem {
+class ApiBillDetails {
   final int? id;
   @JsonKey(name: 'effective_date')
   final String? effectiveDate;
@@ -30,8 +31,9 @@ class ApiBillItem {
   final String? userName;
   @JsonKey(name: 'user_phone_number')
   final String? userPhoneNumber;
+  final List<ApiBillProductItem>? product;
 
-  const ApiBillItem({
+  const ApiBillDetails({
     this.id,
     this.effectiveDate,
     this.paymentDueDate,
@@ -46,20 +48,21 @@ class ApiBillItem {
     this.note,
     this.userName,
     this.userPhoneNumber,
+    this.product,
   });
 
   @override
   String toString() {
-    return 'Datum(id: $id, effectiveDate: $effectiveDate, paymentDueDate: $paymentDueDate, state: $state, subTotal: $subTotal, discount: $discount, vat: $vat, sequenceNumber: $sequenceNumber, storeId: $storeId, merchantId: $merchantId, maintenanceCost: $maintenanceCost, note: $note, userName: $userName, userPhoneNumber: $userPhoneNumber)';
+    return 'Data(id: $id, effectiveDate: $effectiveDate, paymentDueDate: $paymentDueDate, state: $state, subTotal: $subTotal, discount: $discount, vat: $vat, sequenceNumber: $sequenceNumber, storeId: $storeId, merchantId: $merchantId, maintenanceCost: $maintenanceCost, note: $note, userName: $userName, userPhoneNumber: $userPhoneNumber, product: $product)';
   }
 
-  factory ApiBillItem.fromJson(Map<String, dynamic> json) =>
-      _$ApiBillItemFromJson(json);
+  factory ApiBillDetails.fromJson(Map<String, dynamic> json) =>
+      _$ApiBillDetailsFromJson(json);
 
-  Map<String, dynamic> toJson() => _$ApiBillItemToJson(this);
+  Map<String, dynamic> toJson() => _$ApiBillDetailsToJson(this);
 
-  Bill toDomain() => Bill(
-      id: id.or(-1),
+  BillDetails toDomain() => BillDetails(
+      id: id.throwIfNull(),
       discount: discount?.toDouble() ?? 0.0,
       effectiveDate: effectiveDate.or("-"),
       maintenanceCost: maintenanceCost?.toDouble() ?? 0.0,
@@ -72,5 +75,6 @@ class ApiBillItem {
       subTotal: subTotal?.toDouble() ?? 0.0,
       userName: userName.or(""),
       userPhoneNumber: userPhoneNumber.or(""),
-      vat: vat?.toDouble() ?? 0.0);
+      vat: vat?.toDouble() ?? 0.0,
+      products: product.or([]).map((e) => e.toDomain()).toList());
 }

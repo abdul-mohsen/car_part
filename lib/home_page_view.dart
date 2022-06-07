@@ -2,17 +2,17 @@ import 'package:car_part/app_buttom.dart';
 import 'package:car_part/common/ui/view.dart';
 import 'package:car_part/home_page_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
-class HomePage extends View<HomePageViewModel> {
-  const HomePage({required HomePageViewModel viewModel, Key? key})
-      : super.model(viewModel, key: key);
+class HomePage extends View {
+  const HomePage({Key? key}) : super.model(key: key);
 
   @override
-  _HomePageState createState() => _HomePageState(viewModel);
+  _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends ViewState<HomePage, HomePageViewModel> {
-  _HomePageState(HomePageViewModel viewModel) : super(viewModel);
+  _HomePageState() : super(Modular.get<HomePageViewModel>());
 
   @override
   void initState() {

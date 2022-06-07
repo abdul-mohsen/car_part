@@ -9,14 +9,13 @@ import 'package:flutter_modular/flutter_modular.dart';
 class CarPartRepository implements ICarPartRepository {
   final remote = Modular.get<CarPartRemote>();
   @override
-  Stream<Result<List<CarPartAutoComplete>>> getCarPartAutoCompletelist(
+  Future<Result<List<CarPartAutoComplete>>> getCarPartAutoCompletelist(
           String oemNumber) =>
       remote
           .getCarPartAutoCompleteList(oemNumber)
           .then((value) => value.toResult().when(
               (error) => error, (data) => apiCarPartAutoCompleteMapper(data)))
-          .onError((error, stackTrace) => Result.Error(null))
-          .asStream();
+          .onError((error, stackTrace) => Result.Error(null));
 
   List<CarPartAutoComplete> apiCarPartAutoCompleteMapper(
           ApiCarPartAutoComplete api) =>

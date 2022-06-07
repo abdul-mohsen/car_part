@@ -1,4 +1,3 @@
-import 'package:car_part/common/extention/debug.dart';
 import 'package:car_part/common/routing/route.dart';
 import 'package:car_part/common/ui/view_model.dart';
 import 'package:car_part/features/carPart/data/repository/car_part_repository.dart';
@@ -36,9 +35,9 @@ class HomePageViewModel extends ViewModel {
   final client = Modular.get<CarPartRepository>();
 
   void plusButtonTapped() {
-    client.getCarPartAutoCompletelist("26300-02503").listen((event) {
-      debug("ssda $event");
-    });
+    // client.getCarPartAutoCompletelist("26300-02503").listen((event) {
+    //   debug("ssda $event");
+    // });
     _updateState(_stateSubject.value.count + 1);
   }
 

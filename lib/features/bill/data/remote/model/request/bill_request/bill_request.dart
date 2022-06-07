@@ -6,7 +6,9 @@ part 'bill_request.g.dart';
 
 @JsonSerializable()
 class BillRequest {
+  @JsonKey(name: 'state')
   final int? state;
+  @JsonKey(name: 'discount')
   final String? discount;
   @JsonKey(name: 'store_id')
   final int? storeId;
@@ -22,9 +24,11 @@ class BillRequest {
   final String? userName;
   @JsonKey(name: 'user_phone_number')
   final String? userPhoneNumber;
+  @JsonKey(name: 'note')
   final String? note;
   @JsonKey(name: 'maintenance_cost')
   final String? maintenanceCost;
+  @JsonKey(name: 'products')
   final List<ProductRequest>? products;
 
   const BillRequest({

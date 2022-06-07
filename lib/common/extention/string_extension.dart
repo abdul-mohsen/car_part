@@ -3,17 +3,11 @@ extension NullableStringExtention on String? {
 }
 
 extension StringExtention on String {
-  int? toInt() {
-    try {
-      return int.parse(this);
-    } catch (e) {
-      return null;
-    }
-  }
+  int? toInt() => int.tryParse(this);
 
   double? toDouble() {
     try {
-      return double.parse(this);
+      return double.tryParse(this);
     } catch (e) {
       return null;
     }

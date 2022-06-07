@@ -1,4 +1,3 @@
-import 'package:car_part/common/routing/route.dart';
 import 'package:car_part/common/ui/loading_dailog.dart';
 import 'package:car_part/common/ui/view.dart';
 import 'package:car_part/common/widget/edit_text.dart';
@@ -7,9 +6,8 @@ import 'package:car_part/features/authentication/ui/login/login_view_model.dart'
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-class LoginView extends View<LoginViewModel> {
-  const LoginView({required LoginViewModel viewModel, Key? key})
-      : super.model(viewModel, key: key);
+class LoginView extends View {
+  const LoginView({Key? key}) : super.model(key: key);
 
   @override
   _LoginState createState() => _LoginState();
@@ -35,14 +33,7 @@ class _LoginState extends ViewState<LoginView, LoginViewModel> {
       }
       _isButtonEnable = event.enableLoginButton;
       if (event.navigate.getContentIfNotHandled() == true) {
-        viewModel.addToNavigation(
-          const AppRouteSpec(
-            name: '/second',
-            arguments: {
-              'count': -1,
-            },
-          ),
-        );
+        Modular.to.navigate("/");
       }
     });
   }
@@ -64,8 +55,14 @@ class _LoginState extends ViewState<LoginView, LoginViewModel> {
                     spacing: 20,
                     runSpacing: 20,
                     children: [
-                      getEditText("Enter Username", viewModel.updateUsername),
-                      getEditText("Enter Password", viewModel.updatePassword),
+                      getEditText(
+                          label: "Enter Username",
+                          onTextChange: viewModel.updateUsername,
+                          width: 250),
+                      getEditText(
+                          label: "Enter Password",
+                          onTextChange: viewModel.updatePassword,
+                          width: 250),
                       ElevatedButton(
                           onPressed: () => _isButtonEnable
                               ? viewModel.onLoginPressed()

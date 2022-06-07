@@ -1,1 +1,1 @@
-enum BillViewNavigation { back }
+enum BillViewNavigation { back, billDetails }

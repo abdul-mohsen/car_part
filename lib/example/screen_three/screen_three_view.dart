@@ -2,17 +2,17 @@ import 'package:car_part/app_buttom.dart';
 import 'package:car_part/common/ui/view.dart';
 import 'package:car_part/example/screen_three/screen_three_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
-class ThirdPage extends View<ThirdPageViewModel> {
-  const ThirdPage({required ThirdPageViewModel viewModel, Key? key})
-      : super.model(viewModel, key: key);
+class ThirdPage extends View {
+  const ThirdPage({Key? key}) : super.model(key: key);
 
   @override
-  _ThirdPageState createState() => _ThirdPageState(viewModel);
+  _ThirdPageState createState() => _ThirdPageState();
 }
 
 class _ThirdPageState extends ViewState<ThirdPage, ThirdPageViewModel> {
-  _ThirdPageState(ThirdPageViewModel viewModel) : super(viewModel);
+  _ThirdPageState() : super(Modular.get<ThirdPageViewModel>());
 
   @override
   void initState() {
@@ -88,15 +88,9 @@ class _ThirdPageState extends ViewState<ThirdPage, ThirdPageViewModel> {
                   ),
                 ),
                 const SizedBox(height: 32),
-                AppButton(
-                  onTap: viewModel.navigateToBills,
-                  child: Text(
-                    'navigate to bills',
-                    style: Theme.of(context)
-                        .textTheme
-                        .button
-                        ?.copyWith(color: Colors.blue),
-                  ),
+                ElevatedButton(
+                  onPressed: () => Modular.to.pushNamed('/bills'),
+                  child: const Text('Navigate to Second Page'),
                 ),
               ],
             ),

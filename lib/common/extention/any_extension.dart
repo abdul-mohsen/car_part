@@ -4,6 +4,11 @@ extension AnyExtention<T> on T? {
   S? to<S>() => _cast(this);
 
   X? _cast<X>(x) => x is X ? x : null;
+
+  T throwIfNull() {
+    if (this == null) throw Exception();
+    return this!;
+  }
 }
 
 extension AnyNonNullExtention<T> on T {
@@ -12,4 +17,6 @@ extension AnyNonNullExtention<T> on T {
     fun(this);
     return this;
   }
+
+  R runAndReturn<R>(R Function(T) fun) => fun(this);
 }

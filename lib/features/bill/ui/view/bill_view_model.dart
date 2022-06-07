@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:car_part/common/ui/view_model.dart';
 import 'package:car_part/features/bill/data/domain/model/bill.dart';
 import 'package:car_part/features/bill/data/domain/repository/bill_repository_abs.dart';
+import 'package:car_part/features/bill/ui/view/model/bill_navigation.dart';
 import 'package:car_part/features/bill/ui/view/model/bill_view_state.dart';
 import 'package:car_part/features/bill/ui/view/model/ui_bill_view.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -35,10 +36,15 @@ class BillViewModel extends ViewModel {
       }, (data) {
         _viewState.add(_viewState.value
             .updateBills(data.map((e) => _fromDomain(e)).toList()));
-        pageNumber++;
         _listEnd = data.length < _pageSize;
       });
     });
+  }
+
+  void navigateToDetails(int id) {
+    _viewState.add(_viewState.value
+        .navigateTo(BillViewNavigation.billDetails)
+        .updateTargetId(id));
   }
 
   UiBillView _fromDomain(Bill bill) => UiBillView(
@@ -50,6 +56,14 @@ class BillViewModel extends ViewModel {
       vat: bill.vat,
       userName: bill.userName,
       userPhoneNumber: bill.userPhoneNumber);
+
+  void deleteBill(int id) async {
+    final result = await _repo.deleteBill(id);
+    result.when((error) {
+      _viewState.add(_viewState.value.updateError(error));
+      return error;
+    }, (data) => _viewState);
+  }
 
   @override
   void dispose() {

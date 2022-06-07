@@ -21,9 +21,12 @@ extension BillApi on Dio {
 
   Future<Response<Map<String, dynamic>?>> updateBill(
           int billId, BillRequest request) =>
-      put("${EndPoints.bills}/$billId", data: request.toJson);
+      put("${EndPoints.bills}/$billId", data: request.toJson());
 
   Future<Response<Map<String, dynamic>?>> addPayment(
           int billId, PaymentRequest request) =>
-      post("${EndPoints.bills}/$billId", data: request.toJson);
+      post("${EndPoints.bills}/$billId", data: request.toJson());
+
+  Future<Response<Map<String, dynamic>?>> deleteBill(int billId) =>
+      delete("${EndPoints.bills}/$billId");
 }

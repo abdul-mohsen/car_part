@@ -1,18 +1,18 @@
 import 'package:car_part/app_buttom.dart';
-import 'package:car_part/common/ui/View.dart';
+import 'package:car_part/common/ui/view.dart';
 import 'package:car_part/example/screen_two/screen_two_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
-class SecondPage extends View<SecondPageViewModel> {
-  const SecondPage({required SecondPageViewModel viewModel, Key? key})
-      : super.model(viewModel, key: key);
+class SecondPage extends View {
+  const SecondPage({Key? key}) : super.model(key: key);
 
   @override
-  _SecondPageState createState() => _SecondPageState(viewModel);
+  _SecondPageState createState() => _SecondPageState();
 }
 
 class _SecondPageState extends ViewState<SecondPage, SecondPageViewModel> {
-  _SecondPageState(SecondPageViewModel viewModel) : super(viewModel);
+  _SecondPageState() : super(Modular.get<SecondPageViewModel>());
 
   @override
   void initState() {

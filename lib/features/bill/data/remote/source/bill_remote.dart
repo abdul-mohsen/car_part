@@ -2,7 +2,7 @@ import 'package:car_part/common/cache/app_pref.dart';
 import 'package:car_part/common/network/dio_client.dart';
 import 'package:car_part/features/bill/data/remote/model/request/payment_request/payment_request.dart';
 import 'package:car_part/features/bill/data/remote/model/request/bill_request/bill_request.dart';
-import 'package:car_part/features/bill/data/remote/model/response/api_bill_response/api_bill_item.dart';
+import 'package:car_part/features/bill/data/remote/model/response/api_bill_details_response/api_bill_details.dart';
 import 'package:car_part/features/bill/data/remote/model/response/api_bill_response/api_bill_response.dart';
 import 'package:car_part/features/bill/data/remote/source/bill_remote_abs.dart';
 import 'package:car_part/common/network/response_result.dart';
@@ -23,8 +23,8 @@ class BillRemote implements IBillRemote {
       api.dio.addPayment(billId, request).handleBoolRemote();
 
   @override
-  Future<ResponseResult<ApiBillItem>> getBillDetails(int billId) =>
-      api.dio.getBillDetails(billId).handleRemote(ApiBillItem.fromJson);
+  Future<ResponseResult<ApiBillDetails>> getBillDetails(int billId) =>
+      api.dio.getBillDetails(billId).handleRemote(ApiBillDetails.fromJson);
 
   @override
   Future<ResponseResult<ApiBillResponse>> getBills(
@@ -39,4 +39,8 @@ class BillRemote implements IBillRemote {
   @override
   Future<ResponseResult<bool>> updateBills(int billId, BillRequest request) =>
       api.dio.updateBill(billId, request).handleBoolRemote();
+
+  @override
+  Future<ResponseResult<bool>> deleteBill(int billId) =>
+      api.dio.deleteBill(billId).handleBoolRemote();
 }

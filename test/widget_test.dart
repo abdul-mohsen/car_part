@@ -10,9 +10,6 @@
 
 // import 'package:car_part/main.dart';
 
-import 'dart:async';
-
-import 'package:car_part/common/routing/route.dart';
 import 'package:car_part/home_page_view_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -90,18 +87,18 @@ void main() {
     });
   });
 
-  test('secondPageButtonTapped pushes second page', () async {
-    // Set count to one
-    viewModel.plusButtonTapped();
+  // test('secondPageButtonTapped pushes second page', () async {
+  //   // Set count to one
+  //   viewModel.plusButtonTapped();
 
-    // delay execution so the event it caught by the Routes Publish
-    scheduleMicrotask(viewModel.secondPageButtonTapped);
-    final route = await viewModel.routes.first;
+  //   // delay execution so the event it caught by the Routes Publish
+  //   scheduleMicrotask(viewModel.secondPageButtonTapped);
+  //   final route = await viewModel.routes.first;
 
-    expect(route.name, '/second');
-    expect(route.action, AppRouteAction.pushTo);
-    expect(route.arguments, {'count': 1});
+  //   expect(route.name, '/second');
+  //   expect(route.action, AppRouteAction.pushTo);
+  //   expect(route.arguments, {'count': 1});
 
-    viewModel.dispose();
-  });
+  //   viewModel.dispose();
+  // });
 }
