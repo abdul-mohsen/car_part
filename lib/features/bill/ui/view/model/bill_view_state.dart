@@ -1,7 +1,6 @@
 import 'package:car_part/common/extention/any_extension.dart';
 import 'package:car_part/common/network/errors/app_error.dart';
 import 'package:car_part/common/ui/Event.dart';
-import 'package:car_part/features/bill/ui/view/bill_view.dart';
 import 'package:car_part/features/bill/ui/view/model/bill_navigation.dart';
 import 'package:car_part/features/bill/ui/view/model/ui_bill_view.dart';
 

@@ -16,7 +16,7 @@ class BillViewModel extends ViewModel {
 
   final _repo = Modular.get<IBillRepository>();
   var pageNumber = 0;
-  static const _pageSize = 25;
+  static const _pageSize = 10;
   static const _state = 1;
   var _listEnd = false;
 
@@ -37,6 +37,7 @@ class BillViewModel extends ViewModel {
         _viewState.add(_viewState.value
             .updateBills(data.map((e) => _fromDomain(e)).toList()));
         _listEnd = data.length < _pageSize;
+        pageNumber++;
       });
     });
   }
@@ -45,6 +46,10 @@ class BillViewModel extends ViewModel {
     _viewState.add(_viewState.value
         .navigateTo(BillViewNavigation.billDetails)
         .updateTargetId(id));
+  }
+
+  void createNewBill() {
+    _viewState.add(_viewState.value.navigateTo(BillViewNavigation.billDetails));
   }
 
   UiBillView _fromDomain(Bill bill) => UiBillView(

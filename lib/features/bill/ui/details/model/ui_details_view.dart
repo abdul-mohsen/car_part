@@ -1,7 +1,7 @@
 import 'package:car_part/features/bill/data/domain/model/bill_product.dart';
 
 class UiBillDetails {
-  final int id;
+  final int? id;
   final String effectiveDate;
   final String paymentDueDate;
   final int state;

@@ -44,7 +44,24 @@ class BillDetailsViewModel extends ViewModel {
   }
 
   void loadBill() async {
-    int id = Modular.args.data;
+    int? id = Modular.args.data;
+    if (id == null) {
+      _viewState.add(_viewState.value.updateBillDetails(UiBillDetails(
+          id: null,
+          effectiveDate: "-",
+          paymentDueDate: "-",
+          state: 1,
+          subTotal: 0,
+          discount: 0,
+          vat: 0,
+          sequenceNumber: "",
+          maintenanceCost: 0,
+          note: "",
+          userName: "",
+          userPhoneNumber: "",
+          products: [])));
+      return;
+    }
     _viewState.add(_viewState.value.updateLoading());
     final result = await _repo.getBillDetails(id);
     result.when((error) {
@@ -115,7 +132,7 @@ class BillDetailsViewModel extends ViewModel {
   }
 
   void _submitData(
-      String? userName, String? userPhone, String? note, int state) async {
+      String? userName, String? userPhone, String? note, int state) {
     final uiBill = _viewState.value.uiBill!;
     final billRequest = BillRequest(
       state: state,
@@ -136,7 +153,26 @@ class BillDetailsViewModel extends ViewModel {
     );
     final myvalue = billRequest.toJson();
     debug(myvalue);
-    final result = await _repo.updateBills(uiBill.id, billRequest);
+    if (uiBill.id == null) {
+      _addBill(uiBill, billRequest);
+    } else {
+      _updateBill(uiBill, billRequest);
+    }
+  }
+
+  Future<void> _updateBill(
+      UiBillDetails uiBill, BillRequest billRequest) async {
+    final result = await _repo.updateBills(uiBill.id!, billRequest);
+    result.when((error) {
+      _viewState.add(_viewState.value.updateError(error));
+      return error;
+    },
+        (data) => _viewState
+            .add(_viewState.value.navigateTo(BillDetailsNavigation.back)));
+  }
+
+  Future<void> _addBill(UiBillDetails uiBill, BillRequest billRequest) async {
+    final result = await _repo.addBill(billRequest);
     result.when((error) {
       _viewState.add(_viewState.value.updateError(error));
       return error;

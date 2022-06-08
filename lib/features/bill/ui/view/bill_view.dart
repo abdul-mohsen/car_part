@@ -19,17 +19,6 @@ class _BillViewSate extends ViewState<BillView, BillViewModel> {
   _BillViewSate() : super(Modular.get<BillViewModel>());
   ScrollController controller = ScrollController();
 
-  final _header = [
-    Text("id", textAlign: TextAlign.center),
-    Text("customer", textAlign: TextAlign.center),
-    Text("customerphone", textAlign: TextAlign.center),
-    Text("maintenance cost", textAlign: TextAlign.center),
-    Text("subTotal", textAlign: TextAlign.center),
-    Text("discount", textAlign: TextAlign.center),
-    Text("vat", textAlign: TextAlign.center),
-    Text("", textAlign: TextAlign.center),
-  ];
-
   @override
   void initState() {
     super.initState();
@@ -62,6 +51,8 @@ class _BillViewSate extends ViewState<BillView, BillViewModel> {
             enableDarkMode: true,
             titleText: "bills",
             child: ConstrainedBox(
+                constraints:
+                    const BoxConstraints.expand(width: double.maxFinite),
                 child: SingleChildScrollView(
                   controller: controller,
                   child: DataTable(
@@ -69,13 +60,11 @@ class _BillViewSate extends ViewState<BillView, BillViewModel> {
                         .map((e) => _viewHolder(e))
                         .toList(),
                     sortColumnIndex: 0,
-                    columns: _header
+                    columns: _getHeader()
                         .map((e) => DataColumn(label: Expanded(child: e)))
                         .toList(),
                   ),
-                ),
-                constraints:
-                    const BoxConstraints.expand(width: double.maxFinite))));
+                ))));
   }
 
   void _scrollListener() {
@@ -98,10 +87,24 @@ class _BillViewSate extends ViewState<BillView, BillViewModel> {
         Text(item.discount.toString()),
         Text(item.vat.toString()),
         IconButton(
-          icon: Icon(Icons.delete),
+          icon: const Icon(Icons.delete),
           onPressed: () {
             viewModel.deleteBill(item.id);
           },
         )
+      ];
+
+  List<Widget> _getHeader() => [
+        Text("id", textAlign: TextAlign.center),
+        Text("customer", textAlign: TextAlign.center),
+        Text("customerphone", textAlign: TextAlign.center),
+        Text("maintenance cost", textAlign: TextAlign.center),
+        Text("subTotal", textAlign: TextAlign.center),
+        Text("discount", textAlign: TextAlign.center),
+        Text("vat", textAlign: TextAlign.center),
+        IconButton(
+          icon: const Icon(Icons.add),
+          onPressed: viewModel.createNewBill,
+        ),
       ];
 }

@@ -21,7 +21,7 @@ class DioInterceptor extends InterceptorsWrapper {
         .firstWhere((element) => element != null);
 
     if (token != null) {
-      options.headers["Authorization"] = "Bearer " + token;
+      options.headers["Authorization"] = "Bearer $token";
     }
 
     return handler.next(options);
