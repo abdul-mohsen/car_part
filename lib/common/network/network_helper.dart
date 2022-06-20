@@ -10,4 +10,5 @@ ResponseResult<T> handleApi<T>(T? data) {
 
 ResponseResult<S> handleRemote<T, S>(
         ResponseResult<T> api, S Function(T data) mapToDomain) =>
-    api.either((error) => errorMapper(error), (data) => mapToDomain(data));
+    api.either((error) => ResponseResult.failure(errorMapper(error)),
+        (data) => ResponseResult.success(mapToDomain(data)));

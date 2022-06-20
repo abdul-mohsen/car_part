@@ -16,7 +16,7 @@ class BillViewModel extends ViewModel {
 
   final _repo = Modular.get<IBillRepository>();
   var pageNumber = 0;
-  static const _pageSize = 10;
+  static const _pageSize = 25;
   static const _state = 1;
   var _listEnd = false;
 

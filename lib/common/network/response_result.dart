@@ -74,8 +74,8 @@ abstract class ResponseResult<S> extends Equatable {
   /// Transforms values of [error] and [data] in new a `DataResult` type. Only
   /// the matching function to the object type will be executed. For example,
   /// for a `SuccessResult` object only the [fnData] function will be executed.
-  ResponseResult<T> either<T>(
-      Failure Function(Failure error) fnFailure, T Function(S data) fnData);
+  R either<T, R>(
+      R Function(Failure error) fnFailure, R Function(S data) fnData);
 
   /// Transforms value of [data] allowing a new `DataResult` to be returned.
   /// A `SuccessResult` might return a `FailureResult` and vice versa.
@@ -94,13 +94,8 @@ abstract class ResponseResult<S> extends Equatable {
   @override
   List<Object?> get props => [if (isSuccess) data else error];
 
-  Result<S> toResult() {
-    if (isSuccess) {
-      return Result.Success(data!);
-    } else {
-      return Result.Error(error!.toAppError());
-    }
-  }
+  Result<S> toResult() => either((error) => Result.Error(error.toAppError()),
+      (data) => Result.Success(data));
 }
 
 /// Success implementation of `DataResult`. It contains `data`. It's abstracted
@@ -111,9 +106,9 @@ class _SuccessResult<S> extends ResponseResult<S> {
   _SuccessResult(this._value);
 
   @override
-  _SuccessResult<T> either<T>(
-      Failure Function(Failure error) fnFailure, T Function(S data) fnData) {
-    return _SuccessResult<T>(fnData(_value));
+  R either<T, R>(
+      R Function(Failure error) fnFailure, R Function(S data) fnData) {
+    return fnData(_value);
   }
 
   @override
@@ -140,9 +135,9 @@ class _FailureResult<S> extends ResponseResult<S> {
   _FailureResult(this._value);
 
   @override
-  _FailureResult<T> either<T>(
-      Failure Function(Failure error) fnFailure, T Function(S data) fnData) {
-    return _FailureResult<T>(fnFailure(_value));
+  R either<T, R>(
+      R Function(Failure error) fnFailure, R Function(S data) fnData) {
+    return fnFailure(_value);
   }
 
   @override

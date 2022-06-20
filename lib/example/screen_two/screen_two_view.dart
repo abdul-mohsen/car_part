@@ -8,11 +8,11 @@ class SecondPage extends View {
   const SecondPage({Key? key}) : super.model(key: key);
 
   @override
-  _SecondPageState createState() => _SecondPageState();
+  SecondPageView createState() => SecondPageView();
 }
 
-class _SecondPageState extends ViewState<SecondPage, SecondPageViewModel> {
-  _SecondPageState() : super(Modular.get<SecondPageViewModel>());
+class SecondPageView extends ViewState<SecondPage, SecondPageViewModel> {
+  SecondPageView() : super(Modular.get<SecondPageViewModel>());
 
   @override
   void initState() {

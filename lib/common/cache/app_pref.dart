@@ -5,6 +5,7 @@ class AppPref {
   static const String accessToken = "accessToken";
   static const String refreshToken = "refreshToken";
   static const String storeId = "storeId";
+  static const String locale = "locale";
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   RxSharedPreferences? _rxPrefsInstance;
   Future<RxSharedPreferences> get _rxPrefs async {

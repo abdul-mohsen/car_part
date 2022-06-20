@@ -8,11 +8,11 @@ class HomePage extends View {
   const HomePage({Key? key}) : super.model(key: key);
 
   @override
-  _HomePageState createState() => _HomePageState();
+  HomePageView createState() => HomePageView();
 }
 
-class _HomePageState extends ViewState<HomePage, HomePageViewModel> {
-  _HomePageState() : super(Modular.get<HomePageViewModel>());
+class HomePageView extends ViewState<HomePage, HomePageViewModel> {
+  HomePageView() : super(Modular.get<HomePageViewModel>());
 
   @override
   void initState() {

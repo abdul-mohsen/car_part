@@ -12,11 +12,11 @@ class BillView extends View {
   const BillView({Key? key}) : super.model(key: key);
 
   @override
-  _BillViewSate createState() => _BillViewSate();
+  BillState createState() => BillState();
 }
 
-class _BillViewSate extends ViewState<BillView, BillViewModel> {
-  _BillViewSate() : super(Modular.get<BillViewModel>());
+class BillState extends ViewState<BillView, BillViewModel> {
+  BillState() : super(Modular.get<BillViewModel>());
   ScrollController controller = ScrollController();
 
   @override

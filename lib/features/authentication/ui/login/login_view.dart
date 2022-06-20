@@ -10,11 +10,11 @@ class LoginView extends View {
   const LoginView({Key? key}) : super.model(key: key);
 
   @override
-  _LoginState createState() => _LoginState();
+  LoginState createState() => LoginState();
 }
 
-class _LoginState extends ViewState<LoginView, LoginViewModel> {
-  _LoginState() : super(Modular.get<LoginViewModel>());
+class LoginState extends ViewState<LoginView, LoginViewModel> {
+  LoginState() : super(Modular.get<LoginViewModel>());
 
   bool _isButtonEnable = false;
 
@@ -40,7 +40,7 @@ class _LoginState extends ViewState<LoginView, LoginViewModel> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<LoginState>(
+    return StreamBuilder<LoginViewState>(
         stream: viewModel.viewState,
         builder: (context, snapshot) => Scaffold(
             appBar: AppBar(

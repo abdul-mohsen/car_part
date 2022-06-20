@@ -15,12 +15,12 @@ class TableView<T> extends DataTableSource {
     if (index >= items.length) {
       return null;
     }
-    final _item = items[index];
+    final item = items[index];
 
     void onLongPress() => onEevnt?.let((fun) => fun(index));
 
     return DataRow.byIndex(
-        index: index, cells: viewHolder(_item), onLongPress: onLongPress);
+        index: index, cells: viewHolder(item), onLongPress: onLongPress);
   }
 
   @override

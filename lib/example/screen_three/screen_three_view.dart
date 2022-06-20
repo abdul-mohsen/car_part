@@ -1,18 +1,24 @@
 import 'package:car_part/app_buttom.dart';
+import 'package:car_part/common/cache/app_pref.dart';
 import 'package:car_part/common/ui/view.dart';
 import 'package:car_part/example/screen_three/screen_three_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/locale.dart';
 
 class ThirdPage extends View {
   const ThirdPage({Key? key}) : super.model(key: key);
 
   @override
-  _ThirdPageState createState() => _ThirdPageState();
+  ThirdPageViwe createState() => ThirdPageViwe();
 }
 
-class _ThirdPageState extends ViewState<ThirdPage, ThirdPageViewModel> {
-  _ThirdPageState() : super(Modular.get<ThirdPageViewModel>());
+class ThirdPageViwe extends ViewState<ThirdPage, ThirdPageViewModel> {
+  ThirdPageViwe() : super(Modular.get<ThirdPageViewModel>());
+
+  final appPref = Modular.get<AppPref>();
 
   @override
   void initState() {
@@ -67,9 +73,9 @@ class _ThirdPageState extends ViewState<ThirdPage, ThirdPageViewModel> {
                 ),
                 const SizedBox(height: 32),
                 AppButton(
-                  onTap: viewModel.popButtonTapped,
+                  onTap: () => appPref.setString(AppPref.locale, "ar"),
                   child: Text(
-                    'Pop',
+                    'عربي',
                     style: Theme.of(context)
                         .textTheme
                         .button
@@ -78,9 +84,9 @@ class _ThirdPageState extends ViewState<ThirdPage, ThirdPageViewModel> {
                 ),
                 const SizedBox(height: 32),
                 AppButton(
-                  onTap: viewModel.temp,
+                  onTap: () => appPref.setString(AppPref.locale, "en"),
                   child: Text(
-                    'get something',
+                    'English',
                     style: Theme.of(context)
                         .textTheme
                         .button

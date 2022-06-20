@@ -11,8 +11,8 @@ import 'package:rxdart/rxdart.dart';
 
 class LoginViewModel extends ViewModel {
   final _viewState =
-      BehaviorSubject<LoginState>.seeded(LoginState.initViewState());
-  Stream<LoginState> get viewState => _viewState;
+      BehaviorSubject<LoginViewState>.seeded(LoginViewState.initViewState());
+  Stream<LoginViewState> get viewState => _viewState;
 
   final _repo = Modular.get<IAuthenticationRepository>();
   final _appPref = Modular.get<AppPref>();

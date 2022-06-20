@@ -13,17 +13,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:car_part/common/extention/widget_ext.dart';
+import 'package:car_part/common/extention/resource_ext.dart';
 
 class BillDetailsView extends View {
   const BillDetailsView({Key? key}) : super.model(key: key);
 
   @override
-  _BillDetailsViewState createState() => _BillDetailsViewState();
+  BillDetailsState createState() => BillDetailsState();
 }
 
-class _BillDetailsViewState
+class BillDetailsState
     extends ViewState<BillDetailsView, BillDetailsViewModel> {
-  _BillDetailsViewState() : super(Modular.get<BillDetailsViewModel>());
+  BillDetailsState() : super(Modular.get<BillDetailsViewModel>());
 
   @override
   void initState() {
@@ -71,6 +72,7 @@ class _BillDetailsViewState
 
   List<Widget> bindItem(UiBillDetails item) => [
         Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
                 padding: const EdgeInsets.all(16.0),
@@ -88,7 +90,6 @@ class _BillDetailsViewState
                     onTextChange: (text) =>
                         viewModel.onPhoneNumberChange(text)))
           ],
-          mainAxisAlignment: MainAxisAlignment.center,
         ),
         Flexible(
             child: getEditText(
@@ -100,7 +101,7 @@ class _BillDetailsViewState
         DataTable(
           rows: item.products.map((e) => _viewHolder(e)).toList(),
           sortColumnIndex: 0,
-          columns: _header
+          columns: _header()
               .map((e) => DataColumn(label: Expanded(child: e)))
               .toList(),
         ),
@@ -122,6 +123,7 @@ class _BillDetailsViewState
                 .toStringAsFixed(2),
             MainAxisAlignment.center),
         Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton(
                     onPressed: viewModel.navigateBack,
@@ -135,7 +137,6 @@ class _BillDetailsViewState
                     child: const Text("confirm"))
                 .addPadding(16),
           ],
-          mainAxisAlignment: MainAxisAlignment.center,
         )
       ];
 
@@ -166,13 +167,14 @@ class _BillDetailsViewState
         )
       ];
 
-  final _header = [
-    Text("part name", textAlign: TextAlign.center),
-    Text("part number", textAlign: TextAlign.center),
-    Text("price", textAlign: TextAlign.center),
-    Text("quantity", textAlign: TextAlign.center),
-    Text("", textAlign: TextAlign.center),
-  ];
+  List<Widget> _header() => [
+        Text(context.getStrings()?.helloWorld ?? "-",
+            textAlign: TextAlign.center),
+        Text("part number", textAlign: TextAlign.center),
+        Text("price", textAlign: TextAlign.center),
+        Text("quantity", textAlign: TextAlign.center),
+        Text("", textAlign: TextAlign.center),
+      ];
 
   Widget _createDialog() => AlertDialog(
         title: const Text("Product"),

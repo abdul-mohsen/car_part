@@ -2,7 +2,7 @@ import 'package:car_part/common/extention/string_extension.dart';
 import 'package:car_part/common/network/errors/app_error.dart';
 import 'package:car_part/common/ui/Event.dart';
 
-class LoginState {
+class LoginViewState {
   final Event<bool?> loading;
   final Event<UiError?> error;
   final bool enableLoginButton;
@@ -10,26 +10,26 @@ class LoginState {
   final String? username;
   final String? password;
 
-  LoginState(this.loading, this.error, this.enableLoginButton, this.navigate,
-      this.username, this.password);
-  factory LoginState.creat(
+  LoginViewState(this.loading, this.error, this.enableLoginButton,
+      this.navigate, this.username, this.password);
+  factory LoginViewState.creat(
           bool? loading,
           UiError? error,
           bool? enableLoginButton,
           bool? navigate,
           String? username,
           String? password) =>
-      LoginState(Event(loading), Event(error), enableLoginButton ?? false,
+      LoginViewState(Event(loading), Event(error), enableLoginButton ?? false,
           Event(navigate), username, password);
 
-  LoginState copyWith(
+  LoginViewState copyWith(
       {bool? loading,
       UiError? error,
       bool? enableLoginButton,
       bool? navigate,
       String? username,
       String? password}) {
-    return LoginState.creat(
+    return LoginViewState.creat(
         loading ?? this.loading.getContentIfNotHandled(),
         error ?? this.error.getContentIfNotHandled(),
         enableLoginButton ?? this.enableLoginButton,
@@ -38,24 +38,25 @@ class LoginState {
         password ?? this.password);
   }
 
-  static LoginState initViewState() =>
-      LoginState.creat(null, null, null, null, null, null);
+  static LoginViewState initViewState() =>
+      LoginViewState.creat(null, null, null, null, null, null);
 
-  LoginState updateUsername(String? username) => copyWith(
+  LoginViewState updateUsername(String? username) => copyWith(
       username: username,
       enableLoginButton: _updateLoginButton(username, password));
 
-  LoginState updatePassword(String? password) => copyWith(
+  LoginViewState updatePassword(String? password) => copyWith(
       password: password,
       enableLoginButton: _updateLoginButton(username, password));
 
   bool _updateLoginButton(String? username, String? password) =>
       !(username.isEmpytOrNull() || password.isEmpytOrNull());
 
-  LoginState updateLoading() => copyWith(loading: true);
+  LoginViewState updateLoading() => copyWith(loading: true);
 
-  LoginState updateError(UiError error) =>
+  LoginViewState updateError(UiError error) =>
       copyWith(loading: false, error: error);
 
-  LoginState navigateToHomeScreen() => copyWith(loading: false, navigate: true);
+  LoginViewState navigateToHomeScreen() =>
+      copyWith(loading: false, navigate: true);
 }

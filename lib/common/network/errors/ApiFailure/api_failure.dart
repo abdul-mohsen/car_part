@@ -5,7 +5,9 @@ part 'api_failure.g.dart';
 
 @JsonSerializable()
 class ApiFailure extends Failure {
+  @JsonKey(name: 'message')
   final String? message;
+  @JsonKey(name: 'code')
   final int? code;
 
   ApiFailure({this.message, this.code});
