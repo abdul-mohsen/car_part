@@ -4,9 +4,6 @@ import 'package:car_part/common/ui/view.dart';
 import 'package:car_part/example/screen_three/screen_three_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:intl/intl.dart';
-import 'package:intl/locale.dart';
 
 class ThirdPage extends View {
   const ThirdPage({Key? key}) : super.model(key: key);
@@ -19,11 +16,6 @@ class ThirdPageViwe extends ViewState<ThirdPage, ThirdPageViewModel> {
   ThirdPageViwe() : super(Modular.get<ThirdPageViewModel>());
 
   final appPref = Modular.get<AppPref>();
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,15 +53,9 @@ class ThirdPageViwe extends ViewState<ThirdPage, ThirdPageViewModel> {
                   ),
                 ),
                 const SizedBox(height: 32),
-                AppButton(
-                  onTap: viewModel.popUntilSecondButtonTapped,
-                  child: Text(
-                    'Pop until second page',
-                    style: Theme.of(context)
-                        .textTheme
-                        .button
-                        ?.copyWith(color: Colors.blue),
-                  ),
+                ElevatedButton(
+                  onPressed: () => Modular.to.pushNamed('/billsTaps'),
+                  child: const Text('Navigate to Bills'),
                 ),
                 const SizedBox(height: 32),
                 AppButton(

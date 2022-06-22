@@ -7,6 +7,7 @@ import 'package:car_part/features/bill/ui/view/model/bill_view_state.dart';
 import 'package:car_part/features/bill/ui/view/model/ui_bill_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:car_part/common/extention/widget_ext.dart';
 
 class BillView extends View {
   const BillView({Key? key}) : super.model(key: key);
@@ -47,24 +48,18 @@ class BillState extends ViewState<BillView, BillViewModel> {
   Widget build(BuildContext context) {
     return StreamBuilder<BillViewState>(
         stream: viewModel.viewState,
-        builder: (context, snapshot) => CustomScaffold(
-            enableDarkMode: true,
-            titleText: "bills",
-            child: ConstrainedBox(
-                constraints:
-                    const BoxConstraints.expand(width: double.maxFinite),
-                child: SingleChildScrollView(
-                  controller: controller,
-                  child: DataTable(
-                    rows: (snapshot.data?.uiBills ?? [])
-                        .map((e) => _viewHolder(e))
-                        .toList(),
-                    sortColumnIndex: 0,
-                    columns: _getHeader()
-                        .map((e) => DataColumn(label: Expanded(child: e)))
-                        .toList(),
-                  ),
-                ))));
+        builder: (context, snapshot) => SingleChildScrollView(
+              controller: controller,
+              child: DataTable(
+                rows: (snapshot.data?.uiBills ?? [])
+                    .map((e) => _viewHolder(e))
+                    .toList(),
+                sortColumnIndex: 0,
+                columns: _getHeader()
+                    .map((e) => DataColumn(label: Expanded(child: e)))
+                    .toList(),
+              ).addContainer(),
+            ));
   }
 
   void _scrollListener() {

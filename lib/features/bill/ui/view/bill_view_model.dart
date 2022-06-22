@@ -20,9 +20,7 @@ class BillViewModel extends ViewModel {
   static const _state = 1;
   var _listEnd = false;
 
-  @override
-  void init() {
-    super.init();
+  BillViewModel() {
     loadBills();
   }
 
@@ -68,11 +66,5 @@ class BillViewModel extends ViewModel {
       _viewState.add(_viewState.value.updateError(error));
       return error;
     }, (data) => _viewState);
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _viewState.close();
   }
 }
