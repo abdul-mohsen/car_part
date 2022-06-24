@@ -1,5 +1,6 @@
 import 'package:car_part/features/purchase_bill/data/domain/model/purchase_bill_product.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:car_part/common/extention/any_extension.dart';
 
 @immutable
 class ApiProductItem {
@@ -39,7 +40,7 @@ class ApiProductItem {
       };
 
   PurchaseBillProduct toDomain() => PurchaseBillProduct(
-      productId: productId.throwIfNull(),
+      productId: id.throwIfNull(),
       partName: partName.throwIfNull(),
       partNumber: partNumber.throwIfNull(),
       price: double.parse(price ?? "").throwIfNull(),

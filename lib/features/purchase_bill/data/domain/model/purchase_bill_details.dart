@@ -1,4 +1,4 @@
-import 'package:car_part/features/bill/data/domain/model/bill_product.dart';
+import 'package:car_part/features/purchase_bill/data/domain/model/purchase_bill_product.dart';
 import 'package:equatable/equatable.dart';
 
 class PurchaseBillDetails extends Equatable {
@@ -12,9 +12,9 @@ class PurchaseBillDetails extends Equatable {
   final int? sequenceNumber;
   final int? storeId;
   final int? merchantId;
-  final int supplierId;
-  final int supplierSequenceNumber;
-  final List<BillProduct> products;
+  final int? supplierId;
+  final int? supplierSequenceNumber;
+  final List<PurchaseBillProduct> products;
 
   const PurchaseBillDetails(
       {required this.id,
@@ -44,7 +44,7 @@ class PurchaseBillDetails extends Equatable {
       final int? merchantId,
       final int? supplierId,
       final int? supplierSequenceNumber,
-      final List<BillProduct>? products}) {
+      final List<PurchaseBillProduct>? products}) {
     return PurchaseBillDetails(
         id: id ?? this.id,
         effectiveDate: effectiveDate ?? this.effectiveDate,
