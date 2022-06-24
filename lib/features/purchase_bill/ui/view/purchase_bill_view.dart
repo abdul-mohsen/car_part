@@ -1,5 +1,4 @@
 import 'package:car_part/common/ui/view.dart';
-import 'package:car_part/common/widget/custom_scaffold.dart';
 import 'package:car_part/features/bill/ui/view/model/bill_view_state.dart';
 import 'package:car_part/features/purchase_bill/ui/view/purchase_bill_view_model.dart';
 import 'package:flutter/material.dart';

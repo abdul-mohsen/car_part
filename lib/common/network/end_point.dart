@@ -1,6 +1,6 @@
 class EndPoints {
   static const String baseUrl =
-      'https://ba47-2001-16a2-6463-3459-1492-78e6-5443-9eb0.ngrok.io/api/v1/';
+      'https://018f-2a02-cb80-4224-a741-8525-2ede-4074-152c.ngrok.io/api/v1/';
 
   static const String login = '/login';
   static const String refreshToken = '/refresh';
@@ -8,6 +8,6 @@ class EndPoints {
   static const String carPartAutoCompelete = "/car_part";
   static const String product = "/product";
   static const String bills = "/bills";
-  static const String billsDraft = "/bills/draft";
   static const String productQuantity = "/product/quantity";
+  static const String purchaseRegister = "/bills/purchase_register";
 }

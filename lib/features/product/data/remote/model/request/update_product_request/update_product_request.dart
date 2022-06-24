@@ -6,16 +6,16 @@ part 'update_product_request.g.dart';
 
 @JsonSerializable()
 class UpdateProductRequest {
-	@JsonKey(name: 'part_id') 
-	final int? partId;
-	final int? price;
-	final List<Branch>? branches;
+  @JsonKey(name: 'part_id')
+  final int? partId;
+  final int? price;
+  final List<Branch>? branches;
 
-	const UpdateProductRequest({this.partId, this.price, this.branches});
+  const UpdateProductRequest({this.partId, this.price, this.branches});
 
-	factory UpdateProductRequest.fromJson(Map<String, dynamic> json) {
-		return _$UpdateProductRequestFromJson(json);
-	}
+  factory UpdateProductRequest.fromJson(Map<String, dynamic> json) {
+    return _$UpdateProductRequestFromJson(json);
+  }
 
-	Map<String, dynamic> toJson() => _$UpdateProductRequestToJson(this);
+  Map<String, dynamic> toJson() => _$UpdateProductRequestToJson(this);
 }

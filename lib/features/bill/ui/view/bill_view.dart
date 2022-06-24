@@ -1,6 +1,7 @@
+import 'dart:async';
+
 import 'package:car_part/common/extention/any_extension.dart';
 import 'package:car_part/common/ui/view.dart';
-import 'package:car_part/common/widget/custom_scaffold.dart';
 import 'package:car_part/features/bill/ui/view/bill_view_model.dart';
 import 'package:car_part/features/bill/ui/view/model/bill_navigation.dart';
 import 'package:car_part/features/bill/ui/view/model/bill_view_state.dart';
@@ -19,12 +20,14 @@ class BillView extends View {
 class BillState extends ViewState<BillView, BillViewModel> {
   BillState() : super(Modular.get<BillViewModel>());
   ScrollController controller = ScrollController();
+  late StreamSubscription<BillViewState> stream;
 
   @override
   void initState() {
     super.initState();
     controller.addListener(_scrollListener);
-    viewModel.viewState.listen((event) {
+
+    stream = viewModel.viewState.listen((event) {
       event.loading.getContentIfNotHandled()?.let((it) {
         showLoading(it);
       });
@@ -42,6 +45,12 @@ class BillState extends ViewState<BillView, BillViewModel> {
         }
       });
     });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    stream.cancel();
   }
 
   @override
