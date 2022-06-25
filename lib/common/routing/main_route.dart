@@ -4,6 +4,7 @@ import 'package:car_part/features/authentication/ui/login/login_view.dart';
 import 'package:car_part/features/bill/ui/details/bill_details_view.dart';
 import 'package:car_part/features/bill/ui/view/bill_view.dart';
 import 'package:car_part/features/bill/ui/view/bill_view_pager.dart';
+import 'package:car_part/features/purchase_bill/ui/details/purchase_bill_details_view.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 List<ModularRoute> mainRoute() => [
@@ -16,6 +17,9 @@ List<ModularRoute> mainRoute() => [
           guards: [AuthGuard()]),
       ChildRoute('/bill_details',
           child: (context, args) => const BillDetailsView(),
+          guards: [AuthGuard()]),
+      ChildRoute('/purchase_bill_details',
+          child: (context, args) => const PurchaseBillDetailsView(),
           guards: [AuthGuard()]),
       ChildRoute('/login', child: (context, args) => const LoginView()),
       // WildcardRoute(child: (context, args) => NotFoundPage()),

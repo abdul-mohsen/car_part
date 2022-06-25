@@ -20,11 +20,12 @@ class BillPagerView extends StatelessWidget {
             Row(
               children: [
                 AppButton(
-                    child: const Text("ssda").addCenter().addPadding(16),
-                    onTap: () => controller.jumpToPage(1)).addExpanded(),
+                    child: const Text("bills").addCenter().addPadding(16),
+                    onTap: () => controller.jumpToPage(0)).addExpanded(),
                 AppButton(
-                    child: const Text("wweq").addCenter().addPadding(16),
-                    onTap: () => controller.jumpToPage(0)).addExpanded()
+                    child:
+                        const Text("purchase bills").addCenter().addPadding(16),
+                    onTap: () => controller.jumpToPage(1)).addExpanded()
               ],
             ),
             PageView(

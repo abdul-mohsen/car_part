@@ -1,0 +1,1 @@
+enum PurcahseBillViewNavigation { back, billDetails }

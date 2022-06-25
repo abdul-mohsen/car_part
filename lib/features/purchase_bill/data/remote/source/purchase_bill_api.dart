@@ -28,6 +28,7 @@ extension BillApi on Dio {
           int billId, PurchasePaymentRequest request) =>
       post("${EndPoints.purchaseRegister}/$billId", data: request.toJson());
 
-  Future<Response<Map<String, dynamic>?>> deleteBill(int billId) =>
-      delete("${EndPoints.purchaseRegister}/$billId");
+  Future<Response<Map<String, dynamic>?>> deleteBill(int billId, int storeId) =>
+      delete("${EndPoints.purchaseRegister}/$billId",
+          queryParameters: {"store_id": storeId});
 }

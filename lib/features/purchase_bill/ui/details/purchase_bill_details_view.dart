@@ -3,28 +3,29 @@ import 'package:car_part/common/ui/view.dart';
 import 'package:car_part/common/widget/custom_scaffold.dart';
 import 'package:car_part/common/widget/edit_text.dart';
 import 'package:car_part/common/widget/text_with_label.dart';
-import 'package:car_part/features/bill/data/domain/model/bill_product.dart';
-import 'package:car_part/features/bill/ui/details/bill_details_view_model.dart';
-import 'package:car_part/features/bill/ui/details/model/bill_details_navigation.dart';
-import 'package:car_part/features/bill/ui/details/model/bill_details_view_state.dart';
-import 'package:car_part/features/bill/ui/details/model/ui_details_view.dart';
 import 'package:car_part/features/carPart/data/repository/model/car_part_auto_complete.dart';
+import 'package:car_part/features/purchase_bill/data/domain/model/purchase_bill_product.dart';
+import 'package:car_part/features/purchase_bill/ui/details/model/purchase_bill_details_navigation.dart';
+import 'package:car_part/features/purchase_bill/ui/details/model/purchase_bill_details_view_state.dart';
+import 'package:car_part/features/purchase_bill/ui/details/model/ui_purchase_bill_details_view.dart';
+import 'package:car_part/features/purchase_bill/ui/details/purchase_details_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:car_part/common/extention/widget_ext.dart';
 import 'package:car_part/common/extention/resource_ext.dart';
 
-class BillDetailsView extends View {
-  const BillDetailsView({Key? key}) : super.model(key: key);
+class PurchaseBillDetailsView extends View {
+  const PurchaseBillDetailsView({Key? key}) : super.model(key: key);
 
   @override
-  BillDetailsState createState() => BillDetailsState();
+  PurchaseBillDetailsState createState() => PurchaseBillDetailsState();
 }
 
-class BillDetailsState
-    extends ViewState<BillDetailsView, BillDetailsViewModel> {
-  BillDetailsState() : super(Modular.get<BillDetailsViewModel>());
+class PurchaseBillDetailsState
+    extends ViewState<PurchaseBillDetailsView, PurchaseBillDetailsViewModel> {
+  PurchaseBillDetailsState()
+      : super(Modular.get<PurchaseBillDetailsViewModel>());
 
   @override
   void initState() {
@@ -38,13 +39,13 @@ class BillDetailsState
 
       event.navigate.getContentIfNotHandled()?.let((navigation) {
         switch (navigation) {
-          case BillDetailsNavigation.addProducts:
+          case PurchaseBillDetailsNavigation.addProducts:
             {
               // Modular.to.pushNamed("/addProduct");
               showDialog(context: context, builder: (_) => _createDialog());
               break;
             }
-          case BillDetailsNavigation.back:
+          case PurchaseBillDetailsNavigation.back:
             {
               Modular.to.pop();
               break;
@@ -56,7 +57,7 @@ class BillDetailsState
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<BillDetailsViewState>(
+    return StreamBuilder<PurchaseBillDetailsViewState>(
         stream: viewModel.viewState,
         builder: (context, snapshot) => CustomScaffold(
             enableDarkMode: true,
@@ -65,39 +66,32 @@ class BillDetailsState
                 const Text("")));
   }
 
-  Widget getCard(UiBillDetails item) => Card(
+  Widget getCard(UiPurchaseBillDetails item) => Card(
           child: Column(
         children: bindItem(item),
       ).addPadding(8.0));
 
-  List<Widget> bindItem(UiBillDetails item) => [
+  List<Widget> bindItem(UiPurchaseBillDetails item) => [
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: getEditText(
-                    label: "UserName",
-                    text: item.userName,
+                    label: "supplierId",
+                    text: item.supplierId,
                     width: 250,
-                    onTextChange: (text) => viewModel.onUserNameChange(text))),
+                    onTextChange: (text) => viewModel.onSupplierId(text))),
             Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: getEditText(
-                    label: "UserPhone",
-                    text: item.userPhoneNumber,
+                    label: "supplierSequenceNumber",
+                    text: item.supplierSequenceNumber,
                     width: 250,
                     onTextChange: (text) =>
-                        viewModel.onPhoneNumberChange(text)))
+                        viewModel.onSupplierSequenceNumber(text)))
           ],
         ),
-        Flexible(
-            child: getEditText(
-                label: "notes",
-                text: item.note,
-                width: 700,
-                maxLines: null,
-                onTextChange: (text) => viewModel.onNoteChange(text))),
         DataTable(
           rows: item.products.map((e) => _viewHolder(e)).toList(),
           sortColumnIndex: 0,
@@ -109,8 +103,6 @@ class BillDetailsState
           onPressed: viewModel.toAddProductsView,
           icon: const Icon(Icons.add),
         ).addPadding(16),
-        textWithLabel("maintenace const",
-            item.maintenanceCost.toStringAsFixed(2), MainAxisAlignment.center),
         textWithLabel("subTotal", item.subTotal.toStringAsFixed(2),
             MainAxisAlignment.center),
         textWithLabel("discount", item.discount.toStringAsFixed(2),
@@ -119,8 +111,7 @@ class BillDetailsState
             "vat", item.vat.toStringAsFixed(2), MainAxisAlignment.center),
         textWithLabel(
             "total",
-            (item.vat + item.maintenanceCost + item.subTotal - item.discount)
-                .toStringAsFixed(2),
+            (item.vat + item.subTotal - item.discount).toStringAsFixed(2),
             MainAxisAlignment.center),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -140,11 +131,11 @@ class BillDetailsState
         )
       ];
 
-  DataRow _viewHolder(BillProduct product) => DataRow(
+  DataRow _viewHolder(PurchaseBillProduct product) => DataRow(
       cells:
           _bindItem(product).map((e) => DataCell(Center(child: e))).toList());
 
-  List<Widget> _bindItem(BillProduct item) => [
+  List<Widget> _bindItem(PurchaseBillProduct item) => [
         Text(item.partName),
         Text(item.partNumber),
         getEditText(

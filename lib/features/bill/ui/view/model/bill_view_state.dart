@@ -9,7 +9,7 @@ class BillViewState {
   final Event<UiError?> error;
   final Event<BillViewNavigation?> navigate;
   final List<UiBillView> uiBills;
-  final int? targerBillId;
+  final Event<int?> targerBillId;
 
   BillViewState(
       this.loading, this.error, this.navigate, this.uiBills, this.targerBillId);
@@ -20,14 +20,14 @@ class BillViewState {
           List<UiBillView>? uiBills,
           int? targerBillId) =>
       BillViewState(Event(loading), Event(error), Event(navigate),
-          uiBills.or([]), targerBillId);
+          uiBills.or([]), Event(targerBillId));
 
   BillViewState copy(
       {Event<bool?>? loading,
       Event<UiError?>? error,
       Event<BillViewNavigation?>? navigate,
       List<UiBillView>? uiBills,
-      int? targerBillId}) {
+      Event<int?>? targerBillId}) {
     return BillViewState(
         loading ?? this.loading,
         error ?? this.error,
@@ -50,7 +50,7 @@ class BillViewState {
   BillViewState updateBills(List<UiBillView> uiBills) =>
       copy(loading: Event(false), uiBills: this.uiBills + uiBills);
 
-  BillViewState updateTargetId(int id) => copy(targerBillId: id);
+  BillViewState updateTargetId(int id) => copy(targerBillId: Event(id));
 
   BillViewState deleteBill(id) {
     uiBills.removeWhere((element) => element.id == id);

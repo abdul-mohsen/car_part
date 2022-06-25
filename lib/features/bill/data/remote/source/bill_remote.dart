@@ -41,6 +41,9 @@ class BillRemote implements IBillRemote {
       api.dio.updateBill(billId, request).handleBoolRemote();
 
   @override
-  Future<ResponseResult<bool>> deleteBill(int billId) =>
-      api.dio.deleteBill(billId).handleBoolRemote();
+  Future<ResponseResult<bool>> deleteBill(int billId) async {
+    final storeId = await appPref.getInt(AppPref.storeId) ?? 1;
+    if (storeId == null) throw NullThrownError();
+    return api.dio.deleteBill(billId, storeId).handleBoolRemote();
+  }
 }

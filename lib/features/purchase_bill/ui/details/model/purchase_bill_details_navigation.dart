@@ -1,0 +1,1 @@
+enum PurchaseBillDetailsNavigation { back, addProducts }

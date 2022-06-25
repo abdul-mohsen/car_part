@@ -36,8 +36,8 @@ class BillState extends ViewState<BillView, BillViewModel> {
         switch (navigation) {
           case BillViewNavigation.billDetails:
             {
-              Modular.to
-                  .pushNamed("/bill_details", arguments: event.targerBillId);
+              Modular.to.pushNamed("/bill_details",
+                  arguments: event.targerBillId.getContentIfNotHandled());
               break;
             }
           case BillViewNavigation.back:

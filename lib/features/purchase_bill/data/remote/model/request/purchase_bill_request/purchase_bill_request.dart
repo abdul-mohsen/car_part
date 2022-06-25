@@ -1,19 +1,19 @@
 import 'package:flutter/cupertino.dart';
 
-import 'product.dart';
+import 'purchase_bill_product_item.dart';
 
 @immutable
 class PurchaseBillRequest {
   final int? state;
-  final int? discount;
+  final String? discount;
   final int? storeId;
-  final dynamic paymentDueDate;
-  final dynamic paymentMethod;
-  final dynamic paymentDate;
-  final dynamic paidAmount;
-  final int? supplierSequenceNumber;
-  final int? supplierId;
-  final List<Product>? products;
+  final String? paymentDueDate;
+  final String? paymentMethod;
+  final String? paymentDate;
+  final String? paidAmount;
+  final String? supplierSequenceNumber;
+  final String? supplierId;
+  final List<PurchaseBillProductItem>? products;
 
   const PurchaseBillRequest({
     this.state,
@@ -36,16 +36,17 @@ class PurchaseBillRequest {
   factory PurchaseBillRequest.fromJson(Map<String, dynamic> json) {
     return PurchaseBillRequest(
       state: json['state'] as int?,
-      discount: json['discount'] as int?,
+      discount: json['discount'] as String?,
       storeId: json['store_id'] as int?,
       paymentDueDate: json['payment_due_date'] as dynamic,
       paymentMethod: json['payment_method'] as dynamic,
       paymentDate: json['payment_date'] as dynamic,
       paidAmount: json['paid_amount'] as dynamic,
-      supplierSequenceNumber: json['supplier_sequence_number'] as int?,
-      supplierId: json['supplier_id'] as int?,
+      supplierSequenceNumber: json['supplier_sequence_number'] as String?,
+      supplierId: json['supplier_id'] as String?,
       products: (json['products'] as List<dynamic>?)
-          ?.map((e) => Product.fromJson(e as Map<String, dynamic>))
+          ?.map((e) =>
+              PurchaseBillProductItem.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
   }

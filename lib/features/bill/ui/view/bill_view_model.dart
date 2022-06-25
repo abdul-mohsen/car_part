@@ -20,8 +20,10 @@ class BillViewModel extends ViewModel {
   static const _state = 1;
   var _listEnd = false;
 
-  BillViewModel() {
+  @override
+  void init() {
     loadBills();
+    super.init();
   }
 
   void loadBills() {

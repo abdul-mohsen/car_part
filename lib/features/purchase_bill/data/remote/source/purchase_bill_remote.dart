@@ -25,8 +25,12 @@ class PurchaseBillRemote implements IPurchaseBillRemote {
       api.dio.addPayment(billId, request).handleBoolRemote();
 
   @override
-  Future<ResponseResult<bool>> deleteBill(int billId) =>
-      api.dio.deleteBill(billId).handleBoolRemote();
+  Future<ResponseResult<bool>> deleteBill(int billId) async {
+    final storeId = await appPref.getInt(AppPref.storeId) ?? 1;
+    if (storeId == null) throw NullThrownError();
+
+    return api.dio.deleteBill(billId, storeId).handleBoolRemote();
+  }
 
   @override
   Future<ResponseResult<ApiPurchaseBillDetails>> getBillDetails(int billId) =>
@@ -42,7 +46,7 @@ class PurchaseBillRemote implements IPurchaseBillRemote {
 
     return api.dio
         .getBills(pageNumber, pageSize, storeId, state)
-        .handleRemote(ApiPurchaseBillResponse.fromJson);
+        .handleRemote(ApiPurchaseBillResponse.fromJson, isList: true);
   }
 
   @override
