@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:car_part/common/extention/widget_ext.dart';
 import 'package:car_part/common/extention/any_extension.dart';
+import 'package:car_part/common/extention/resource_ext.dart';
 
 class PurchaseBillView extends View {
   const PurchaseBillView({Key? key}) : super.model(key: key);
@@ -93,12 +94,13 @@ class PurchaseBillState
   }
 
   List<Widget> _getHeader() => [
-        Text("id", textAlign: TextAlign.center),
-        Text("supplier_id", textAlign: TextAlign.center),
-        Text("supplier_sequence_number", textAlign: TextAlign.center),
+        Text(context.getStrings().vendorId, textAlign: TextAlign.center),
+        Text(context.getStrings().vendorNumber, textAlign: TextAlign.center),
+        Text(context.getStrings().vendorNumber, textAlign: TextAlign.center),
         Text("subTotal", textAlign: TextAlign.center),
         Text("discount", textAlign: TextAlign.center),
-        Text("vat", textAlign: TextAlign.center),
+        Text(context.getStrings().vendoreVatNumber,
+            textAlign: TextAlign.center),
         IconButton(
           icon: const Icon(Icons.add),
           onPressed: viewModel.createNewBill,

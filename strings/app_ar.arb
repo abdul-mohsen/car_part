@@ -1,3 +1,28 @@
 {
-    "helloWorld": "اهلا بالعالم!"
+    "helloWorld": "اهلا بالعالم!",
+
+    "addBill": "إضافة فاتورة",
+    "purchaseBill": "فاتورة شراء",
+    "bill": "فاتورة بيع",
+    "newBill": "فاتورة جديدة",
+    "billnumber": "رقم الفاتورة",
+    "vendorNumber": "رقم المورد",
+    "vendorId": "رقم المورد",
+    "venderName": "اسم المورد",
+    "vendoreVatNumber": "الرقم الضريبي",
+    "billDate": "تاريخ الشراء",
+    "billSequenceNumber": "رقم فاتورية المورد",
+    "billDetails": "تفاصيل الفاتورة",
+    "billItemQuantity": "الكمية",
+    "billItemPrice": "السعر",
+    "billTotalPrice": "المجموع الكلي",
+    "billTotalVat": "المجموع - الضريبة",
+    "billCarDescribtion": "تفاصيل السيارة",
+    "mobileNumber": "رقم الهاتف",
+    "addCarPart": "إضافة قطعة",
+    "carPartInfo": "بيانات اساسيه",
+    "carPartName": "اسم القطعة",
+    "carPartNumber": "رقم القطعة",
+    "carPartTotalQuentity": "اجمالي الكمية"
+
 }

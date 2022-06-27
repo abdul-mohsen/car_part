@@ -9,6 +9,7 @@ import 'package:car_part/features/bill/ui/view/model/ui_bill_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:car_part/common/extention/widget_ext.dart';
+import 'package:car_part/common/extention/resource_ext.dart';
 
 class BillView extends View {
   const BillView({Key? key}) : super.model(key: key);
@@ -64,7 +65,7 @@ class BillState extends ViewState<BillView, BillViewModel> {
                     .map((e) => _viewHolder(e))
                     .toList(),
                 sortColumnIndex: 0,
-                columns: _getHeader()
+                columns: _getHeader(context)
                     .map((e) => DataColumn(label: Expanded(child: e)))
                     .toList(),
               ).addContainer(),
@@ -98,10 +99,10 @@ class BillState extends ViewState<BillView, BillViewModel> {
         )
       ];
 
-  List<Widget> _getHeader() => [
+  List<Widget> _getHeader(BuildContext context) => [
         Text("id", textAlign: TextAlign.center),
         Text("customer", textAlign: TextAlign.center),
-        Text("customerphone", textAlign: TextAlign.center),
+        Text(context.getStrings().mobileNumber, textAlign: TextAlign.center),
         Text("maintenance cost", textAlign: TextAlign.center),
         Text("subTotal", textAlign: TextAlign.center),
         Text("discount", textAlign: TextAlign.center),

@@ -84,7 +84,7 @@ class BillDetailsState
             Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: getEditText(
-                    label: "UserPhone",
+                    label: context.getStrings().mobileNumber,
                     text: item.userPhoneNumber,
                     width: 250,
                     onTextChange: (text) =>
@@ -93,7 +93,7 @@ class BillDetailsState
         ),
         Flexible(
             child: getEditText(
-                label: "notes",
+                label: context.getStrings().billCarDescribtion,
                 text: item.note,
                 width: 700,
                 maxLines: null,
@@ -115,10 +115,10 @@ class BillDetailsState
             MainAxisAlignment.center),
         textWithLabel("discount", item.discount.toStringAsFixed(2),
             MainAxisAlignment.center),
+        textWithLabel(context.getStrings().billTotalVat,
+            item.vat.toStringAsFixed(2), MainAxisAlignment.center),
         textWithLabel(
-            "vat", item.vat.toStringAsFixed(2), MainAxisAlignment.center),
-        textWithLabel(
-            "total",
+            context.getStrings().billTotalPrice,
             (item.vat + item.maintenanceCost + item.subTotal - item.discount)
                 .toStringAsFixed(2),
             MainAxisAlignment.center),
@@ -134,7 +134,7 @@ class BillDetailsState
                 .addPadding(16),
             ElevatedButton(
                     onPressed: viewModel.confirmData,
-                    child: const Text("confirm"))
+                    child: Text(context.getStrings().addBill))
                 .addPadding(16),
           ],
         )
@@ -168,12 +168,12 @@ class BillDetailsState
       ];
 
   List<Widget> _header() => [
-        Text(context.getStrings()?.helloWorld ?? "-",
+        Text(context.getStrings().carPartName, textAlign: TextAlign.center),
+        Text(context.getStrings().carPartNumber, textAlign: TextAlign.center),
+        Text(context.getStrings().billItemPrice, textAlign: TextAlign.center),
+        Text(context.getStrings().billItemQuantity,
             textAlign: TextAlign.center),
-        Text("part number", textAlign: TextAlign.center),
-        Text("price", textAlign: TextAlign.center),
-        Text("quantity", textAlign: TextAlign.center),
-        Text("", textAlign: TextAlign.center),
+        const Text("", textAlign: TextAlign.center),
       ];
 
   Widget _createDialog() => AlertDialog(

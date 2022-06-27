@@ -1,3 +1,27 @@
 {
-    "helloWorld": "Hello World!"
+    "helloWorld": "Hello World!",
+
+    "addBill": "add bill",
+    "purchaseBill": "Purchase",
+    "bill": "sell",
+    "newBill": "New invoice",
+    "billnumber": "Invoice number",
+    "vendorNumber": "Vendore ID",
+    "vendorId": "vendore name",
+    "venderName": "Vendore VAT number",
+    "vendoreVatNumber": "Invoice number",
+    "billDate": "invoice date",
+    "billSequenceNumber": "Invoice number",
+    "billDetails": "invoice describtion",
+    "billItemQuantity": "QTY",
+    "billItemPrice": "price",
+    "billTotalPrice": "total price - VAT",
+    "billTotalVat": "Total price",
+    "billCarDescribtion": "car describtion",
+    "mobileNumber": "mobile number",
+    "addCarPart": "add part",
+    "carPartInfo": "information",
+    "carPartName": "part name",
+    "carPartNumber": "part number",
+    "carPartTotalQuentity": "total quantity"
 }

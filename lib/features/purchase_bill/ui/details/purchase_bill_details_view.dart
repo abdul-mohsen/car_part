@@ -8,7 +8,7 @@ import 'package:car_part/features/purchase_bill/data/domain/model/purchase_bill_
 import 'package:car_part/features/purchase_bill/ui/details/model/purchase_bill_details_navigation.dart';
 import 'package:car_part/features/purchase_bill/ui/details/model/purchase_bill_details_view_state.dart';
 import 'package:car_part/features/purchase_bill/ui/details/model/ui_purchase_bill_details_view.dart';
-import 'package:car_part/features/purchase_bill/ui/details/purchase_details_view_model.dart';
+import 'package:car_part/features/purchase_bill/ui/details/purchase_bill_details_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -78,14 +78,14 @@ class PurchaseBillDetailsState
             Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: getEditText(
-                    label: "supplierId",
+                    label: context.getStrings().vendorId,
                     text: item.supplierId,
                     width: 250,
                     onTextChange: (text) => viewModel.onSupplierId(text))),
             Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: getEditText(
-                    label: "supplierSequenceNumber",
+                    label: context.getStrings().venderName,
                     text: item.supplierSequenceNumber,
                     width: 250,
                     onTextChange: (text) =>
@@ -107,10 +107,10 @@ class PurchaseBillDetailsState
             MainAxisAlignment.center),
         textWithLabel("discount", item.discount.toStringAsFixed(2),
             MainAxisAlignment.center),
+        textWithLabel(context.getStrings().billTotalVat,
+            item.vat.toStringAsFixed(2), MainAxisAlignment.center),
         textWithLabel(
-            "vat", item.vat.toStringAsFixed(2), MainAxisAlignment.center),
-        textWithLabel(
-            "total",
+            context.getStrings().billTotalPrice,
             (item.vat + item.subTotal - item.discount).toStringAsFixed(2),
             MainAxisAlignment.center),
         Row(
@@ -159,12 +159,12 @@ class PurchaseBillDetailsState
       ];
 
   List<Widget> _header() => [
-        Text(context.getStrings()?.helloWorld ?? "-",
+        Text(context.getStrings().helloWorld, textAlign: TextAlign.center),
+        Text(context.getStrings().carPartNumber, textAlign: TextAlign.center),
+        Text(context.getStrings().billItemPrice, textAlign: TextAlign.center),
+        Text(context.getStrings().billItemQuantity,
             textAlign: TextAlign.center),
-        Text("part number", textAlign: TextAlign.center),
-        Text("price", textAlign: TextAlign.center),
-        Text("quantity", textAlign: TextAlign.center),
-        Text("", textAlign: TextAlign.center),
+        const Text("", textAlign: TextAlign.center),
       ];
 
   Widget _createDialog() => AlertDialog(
