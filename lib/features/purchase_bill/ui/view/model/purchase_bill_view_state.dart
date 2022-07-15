@@ -48,7 +48,7 @@ class PurchaseBillViewState {
       copy(navigate: Event(navigation));
 
   PurchaseBillViewState updateBills(List<UiPurchaseBillView> uiBills) =>
-      copy(loading: Event(false), uiBills: this.uiBills + uiBills);
+      copy(loading: Event(false), uiBills: uiBills);
 
   PurchaseBillViewState updateTargetId(int id) => copy(targerBillId: Event(id));
 

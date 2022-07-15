@@ -15,10 +15,12 @@ class BillViewModel extends ViewModel {
   Stream<BillViewState> get viewState => _viewState;
 
   final _repo = Modular.get<IBillRepository>();
-  var pageNumber = 0;
-  static const _pageSize = 25;
   static const _state = 1;
   var _listEnd = false;
+
+  BillViewModel() {
+    _getBills();
+  }
 
   @override
   void init() {
@@ -26,19 +28,22 @@ class BillViewModel extends ViewModel {
     super.init();
   }
 
-  void loadBills() {
+  void _getBills() {
+    _repo.getBills().listen((event) {
+      _viewState.add(_viewState.value
+          .updateBills(event.map((e) => _fromDomain(e)).toList()));
+    });
+  }
+
+  void loadBills() async {
     if (_listEnd) return;
     _viewState.add(_viewState.value.updateLoading());
-    _repo.getBills(pageNumber, _pageSize, _state).listen((event) {
-      event.when((error) {
-        _viewState.add(_viewState.value.updateError(error));
-        return error;
-      }, (data) {
-        _viewState.add(_viewState.value
-            .updateBills(data.map((e) => _fromDomain(e)).toList()));
-        _listEnd = data.length < _pageSize;
-        pageNumber++;
-      });
+    final result = await _repo.loadMoreBills(_state);
+    result.when((error) {
+      _viewState.add(_viewState.value.updateError(error));
+    }, (data) {
+      _listEnd = !data;
+      _viewState.add(_viewState.value.updateLoading(loading: false));
     });
   }
 

@@ -1,4 +1,5 @@
 import 'package:car_part/common/cache/app_pref.dart';
+import 'package:car_part/common/cache/database/database.dart';
 import 'package:car_part/common/extention/debug.dart';
 import 'package:car_part/common/routing/main_route.dart';
 import 'package:car_part/di/cache.dart';
@@ -70,6 +71,7 @@ class MyApp extends StatelessWidget {
 }
 
 void setup() {
+  WidgetsFlutterBinding.ensureInitialized();
   Logger.root.level = Level.ALL;
   Logger.root.onRecord.listen((event) {
     debug("${event.level.name}: ${event.time}: ${event.message}");

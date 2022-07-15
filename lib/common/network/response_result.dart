@@ -30,6 +30,8 @@ abstract class Failure extends Equatable implements Exception {
 // General failures
 class GenericFailure extends Failure {}
 
+class NullData extends Failure {}
+
 Failure errorMapper(Object error) =>
     error is Failure ? error : GenericFailure();
 

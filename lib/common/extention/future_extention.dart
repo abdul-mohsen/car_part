@@ -18,7 +18,7 @@ extension FutureHandler on Future<Response<Map<String, dynamic>?>> {
             return ResponseResult.success(fromJson(response!['data']));
           }
         } else {
-          return ResponseResult.failure<T>(GenericFailure());
+          return ResponseResult.failure<T>(NullData());
         }
       }).onError((DioError error, stackTrace) {
         switch (error.type) {
@@ -80,7 +80,8 @@ extension FutureHandler on Future<Response<Map<String, dynamic>?>> {
 
 extension FutureRepositoryHandler<T> on Future<ResponseResult<T>> {
   Future<Result<R>> handleRepository<R>(R Function(T) fromJson) =>
-      then((value) =>
-              value.toResult().when((error) => error, (data) => fromJson(data)))
+      then((value) => value.toResult().when(
+              (error) => Result.Error<R>(error.message),
+              (data) => Result.Success(fromJson(data))))
           .onError((error, stackTrace) => Result.Error(null));
 }

@@ -16,8 +16,9 @@ class PurchaseBillRemote implements IPurchaseBillRemote {
   final appPref = Modular.get<AppPref>();
 
   @override
-  Future<ResponseResult<bool>> addBill(PurchaseBillRequest request) =>
-      api.dio.addBill(request).handleBoolRemote();
+  Future<ResponseResult<ApiPurchaseBillItem>> addBill(
+          PurchaseBillRequest request) =>
+      api.dio.addBill(request).handleRemote(ApiPurchaseBillItem.fromJson);
 
   @override
   Future<ResponseResult<bool>> addPayment(
@@ -50,7 +51,9 @@ class PurchaseBillRemote implements IPurchaseBillRemote {
   }
 
   @override
-  Future<ResponseResult<bool>> updateBills(
+  Future<ResponseResult<ApiPurchaseBillItem>> updateBill(
           int billId, PurchaseBillRequest request) =>
-      api.dio.updateBill(billId, request).handleBoolRemote();
+      api.dio
+          .updateBill(billId, request)
+          .handleRemote(ApiPurchaseBillItem.fromJson);
 }

@@ -5,8 +5,7 @@ import 'package:car_part/features/purchase_bill/data/remote/model/request/purcha
 import 'package:car_part/features/purchase_bill/data/remote/model/request/purchase_payment_request.dart';
 
 abstract class IPurchaseBillRepository {
-  Stream<Result<List<PurchaseBill>>> getBills(
-      int pageNumber, int pageSize, int? state);
+  Stream<List<PurchaseBill>> getBills();
 
   Future<Result<bool>> addBill(PurchaseBillRequest request);
 
@@ -17,4 +16,6 @@ abstract class IPurchaseBillRepository {
   Future<Result<PurchaseBillDetails>> getBillDetails(int billId);
 
   Future<Result<bool>> deleteBill(int billId);
+
+  Future<Result<bool>> loadMoreBills(int state);
 }

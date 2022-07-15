@@ -39,7 +39,8 @@ class BillViewState {
   static BillViewState initViewState() =>
       BillViewState.creat(null, null, null, null, null);
 
-  BillViewState updateLoading() => copy(loading: Event(true));
+  BillViewState updateLoading({loading = false}) =>
+      copy(loading: Event(loading));
 
   BillViewState updateError(UiError error) =>
       copy(loading: Event(false), error: Event(error));
@@ -48,7 +49,7 @@ class BillViewState {
       copy(navigate: Event(navigation));
 
   BillViewState updateBills(List<UiBillView> uiBills) =>
-      copy(loading: Event(false), uiBills: this.uiBills + uiBills);
+      copy(loading: Event(false), uiBills: uiBills);
 
   BillViewState updateTargetId(int id) => copy(targerBillId: Event(id));
 

@@ -50,7 +50,6 @@ class LoginViewModel extends ViewModel {
         .login(ApiLoginRequest(username: username, password: password));
     result.when((error) {
       _viewState.add(_viewState.value.updateError(error));
-      return error;
     }, (data) => _viewState.add(_viewState.value.navigateToHomeScreen()));
   }
 

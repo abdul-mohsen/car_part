@@ -19,8 +19,7 @@ abstract class Result<S> extends Equatable {
 
   S operator |(S other) => dataOrElse(other);
 
-  Result<T> when<T>(
-      UiError Function(UiError error) fnFailure, T Function(S data) fnData);
+  O when<T, O>(O Function(UiError error) fnFailure, O Function(S data) fnData);
 
   Result<T> then<T>(Result<T> Function(S data) fnData);
 
@@ -38,9 +37,8 @@ class _Success<S> extends Result<S> {
   _Success(this._value);
 
   @override
-  _Success<T> when<T>(
-      UiError Function(UiError error) fnFailure, T Function(S data) fnData) {
-    return _Success<T>(fnData(_value));
+  O when<T, O>(O Function(UiError error) fnFailure, O Function(S data) fnData) {
+    return fnData(_value);
   }
 
   @override
@@ -65,9 +63,8 @@ class _Error<S> extends Result<S> {
   _Error(this._value);
 
   @override
-  _Error<T> when<T>(
-      UiError Function(UiError error) fnFailure, T Function(S data) fnData) {
-    return _Error<T>(fnFailure(_value));
+  O when<T, O>(O Function(UiError error) fnFailure, O Function(S data) fnData) {
+    return fnFailure(_value);
   }
 
   @override

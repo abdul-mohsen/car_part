@@ -14,9 +14,9 @@ class ProductRepository implements IProductRepository {
   @override
   Stream<Result<List<Product>>> getProduct(int page, int pageSize) => remote
       .getProducts(page, pageSize)
-      .then((value) => value
-          .toResult()
-          .when((error) => error, (data) => apiProductMapper(data)))
+      .then((value) => value.toResult().when(
+          (error) => Result.Error<List<Product>>(error.message),
+          (data) => Result.Success(apiProductMapper(data))))
       .onError((error, stackTrace) => Result.Error(null))
       .asStream();
 

@@ -3,7 +3,7 @@ import 'package:car_part/example/screen_two/screen_two_view_model.dart';
 import 'package:car_part/features/authentication/ui/login/login_view_model.dart';
 import 'package:car_part/features/bill/ui/details/bill_details_view_model.dart';
 import 'package:car_part/features/bill/ui/view/bill_view_model.dart';
-import 'package:car_part/features/purchase_bill/ui/details/purchase_details_view_model.dart';
+import 'package:car_part/features/purchase_bill/ui/details/purchase_bill_details_view_model.dart';
 import 'package:car_part/features/purchase_bill/ui/view/purchase_bill_view_model.dart';
 import 'package:car_part/home_page_view_model.dart';
 import 'package:flutter_modular/flutter_modular.dart';

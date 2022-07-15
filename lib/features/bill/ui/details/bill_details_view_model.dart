@@ -66,7 +66,6 @@ class BillDetailsViewModel extends ViewModel {
     final result = await _repo.getBillDetails(id);
     result.when((error) {
       _viewState.add(_viewState.value.updateError(error));
-      return error;
     },
         (data) => _viewState
             .add(_viewState.value.updateBillDetails(_fromDomain(data))));
@@ -165,7 +164,6 @@ class BillDetailsViewModel extends ViewModel {
     final result = await _repo.updateBills(uiBill.id!, billRequest);
     result.when((error) {
       _viewState.add(_viewState.value.updateError(error));
-      return error;
     },
         (data) => _viewState
             .add(_viewState.value.navigateTo(BillDetailsNavigation.back)));
@@ -175,7 +173,6 @@ class BillDetailsViewModel extends ViewModel {
     final result = await _repo.addBill(billRequest);
     result.when((error) {
       _viewState.add(_viewState.value.updateError(error));
-      return error;
     },
         (data) => _viewState
             .add(_viewState.value.navigateTo(BillDetailsNavigation.back)));

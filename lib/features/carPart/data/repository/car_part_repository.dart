@@ -14,7 +14,8 @@ class CarPartRepository implements ICarPartRepository {
       remote
           .getCarPartAutoCompleteList(oemNumber)
           .then((value) => value.toResult().when(
-              (error) => error, (data) => apiCarPartAutoCompleteMapper(data)))
+              (error) => Result.Error<List<CarPartAutoComplete>>(error.message),
+              (data) => Result.Success(apiCarPartAutoCompleteMapper(data))))
           .onError((error, stackTrace) => Result.Error(null));
 
   List<CarPartAutoComplete> apiCarPartAutoCompleteMapper(

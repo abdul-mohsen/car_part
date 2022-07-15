@@ -159,7 +159,7 @@ class PurchaseBillDetailsState
       ];
 
   List<Widget> _header() => [
-        Text(context.getStrings().helloWorld, textAlign: TextAlign.center),
+        Text(context.getStrings().carPartName, textAlign: TextAlign.center),
         Text(context.getStrings().carPartNumber, textAlign: TextAlign.center),
         Text(context.getStrings().billItemPrice, textAlign: TextAlign.center),
         Text(context.getStrings().billItemQuantity,
