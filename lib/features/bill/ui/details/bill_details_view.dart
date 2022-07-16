@@ -66,7 +66,7 @@ class BillDetailsState
   }
 
   Widget getCard(UiBillDetails item) => Card(
-          child: Column(
+          child: ListView(
         children: bindItem(item),
       ).addPadding(8.0));
 
@@ -91,13 +91,18 @@ class BillDetailsState
                         viewModel.onPhoneNumberChange(text)))
           ],
         ),
-        Flexible(
-            child: getEditText(
-                label: context.getStrings().billCarDescribtion,
-                text: item.note,
-                width: 700,
-                maxLines: null,
-                onTextChange: (text) => viewModel.onNoteChange(text))),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            getEditText(
+                    label: context.getStrings().billCarDescribtion,
+                    text: item.note,
+                    width: 500,
+                    maxLines: null,
+                    onTextChange: (text) => viewModel.onNoteChange(text))
+                .addPadding(16)
+          ],
+        ),
         DataTable(
           rows: item.products.map((e) => _viewHolder(e)).toList(),
           sortColumnIndex: 0,

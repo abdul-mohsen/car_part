@@ -67,7 +67,7 @@ class PurchaseBillDetailsState
   }
 
   Widget getCard(UiPurchaseBillDetails item) => Card(
-          child: Column(
+          child: ListView(
         children: bindItem(item),
       ).addPadding(8.0));
 
