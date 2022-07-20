@@ -5,6 +5,7 @@ import 'package:car_part/features/authentication/ui/login/data/model/login_view_
 import 'package:car_part/features/authentication/ui/login/login_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:car_part/common/extention/any_extension.dart';
 
 class LoginView extends View {
   const LoginView({Key? key}) : super.model(key: key);
@@ -21,6 +22,7 @@ class LoginState extends ViewState<LoginView, LoginViewModel> {
   @override
   void initState() {
     super.initState();
+    LoadingScreen().hide();
     viewModel.viewState.listen((event) {
       bool? showloading = event.loading.getContentIfNotHandled();
       if (showloading == true) {
@@ -35,6 +37,9 @@ class LoginState extends ViewState<LoginView, LoginViewModel> {
       if (event.navigate.getContentIfNotHandled() == true) {
         Modular.to.navigate("/");
       }
+      event.error.getContentIfNotHandled()?.let((error) {
+        showError(error);
+      });
     });
   }
 

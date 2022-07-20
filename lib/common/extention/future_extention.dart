@@ -27,7 +27,13 @@ extension FutureHandler on Future<Response<Map<String, dynamic>?>> {
               return ResponseResult.failure<T>(
                   ApiFailure.fromJson(error.response?.data ?? {}));
             } else {
-              return ResponseResult.failure<T>(GenericFailure());
+              switch (error.response?.statusCode) {
+                case 502:
+                  return ResponseResult.failure(
+                      NetworkError("server response timeout"));
+                default:
+                  return ResponseResult.failure<T>(GenericFailure());
+              }
             }
           case DioErrorType.connectTimeout:
             return ResponseResult.failure<T>(

@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 class UnauthorizeDioIntercepter extends InterceptorsWrapper {
   @override
@@ -9,6 +10,7 @@ class UnauthorizeDioIntercepter extends InterceptorsWrapper {
 
   @override
   void onError(DioError err, ErrorInterceptorHandler handler) {
+    Modular.to.navigate('/login');
     return handler.next(err);
   }
 

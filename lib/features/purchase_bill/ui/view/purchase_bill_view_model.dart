@@ -22,16 +22,11 @@ class PurchaseBillViewModel extends ViewModel {
     _getBills();
   }
 
-  @override
-  void init() {
-    loadBills();
-    super.init();
-  }
-
   void _getBills() {
     _repo.getBills().listen((bills) {
       _viewState.add(_viewState.value
           .updateBills(bills.map((e) => _fromDomain(e)).toList()));
+      if (bills.isEmpty) loadBills();
     });
   }
 

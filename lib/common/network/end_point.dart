@@ -1,6 +1,6 @@
 class EndPoints {
   static const String baseUrl =
-      'https://dc82-2a02-cb80-4200-99e6-3487-c774-4b17-e37c.ngrok.io/api/v1/';
+      'https://1015-2a02-cb80-4222-8628-3070-476a-a51c-ff39.ngrok.io/api/v1/';
 
   static const String login = '/login';
   static const String refreshToken = '/refresh';

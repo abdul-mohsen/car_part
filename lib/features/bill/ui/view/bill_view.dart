@@ -33,6 +33,10 @@ class BillState extends ViewState<BillView, BillViewModel> {
         showLoading(it);
       });
 
+      event.error.getContentIfNotHandled()?.let((it) {
+        showError(it);
+      });
+
       event.navigate.getContentIfNotHandled()?.let((navigation) {
         switch (navigation) {
           case BillViewNavigation.billDetails:

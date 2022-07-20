@@ -1,6 +1,7 @@
 import 'package:car_part/common/domain/result.dart';
 import 'package:car_part/common/extention/any_extension.dart';
 import 'package:car_part/common/extention/future_extention.dart';
+import 'package:car_part/common/ui/event.dart';
 import 'package:car_part/features/bill/data/domain/model/bill.dart';
 import 'package:car_part/features/bill/data/domain/model/bill_details.dart';
 import 'package:car_part/features/bill/data/domain/repository/bill_repository_abs.dart';
@@ -41,9 +42,10 @@ class BillRepository implements IBillRepository {
       remote.getBillDetails(billId).handleRepository(apiBillDetailsMapper);
 
   @override
-  Stream<List<Bill>> getBills() => cache
-      .getBills()
-      .map((data) => data.map((e) => CachedBill.mapToDomain(e)).toList());
+  Stream<List<Bill>> getBills() => cache.getBills().map((data) {
+        page = (data.length / pageSize).floor();
+        return data.map((e) => CachedBill.mapToDomain(e)).toList();
+      });
 
   @override
   Future<Result<bool>> updateBills(int billId, BillRequest request) async {
@@ -74,7 +76,6 @@ class BillRepository implements IBillRepository {
     final response = await remote
         .getBills(page, pageSize, state)
         .handleRepository(apiBillsMapper);
-    page++;
     return response.when((error) => Result.Error(error.message), (data) {
       cache.insertBills(data.map((e) => CachedBill.fromDomain(e)).toList());
       return Result.Success(data.length == pageSize);

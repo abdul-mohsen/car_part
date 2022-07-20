@@ -44,8 +44,10 @@ class PurchaseBillRepository implements IPurchaseBillRepository {
       remote.getBillDetails(billId).handleRepository(apiBillDetailsMapper);
 
   @override
-  Stream<List<PurchaseBill>> getBills() => cache.getBills().map(
-      (items) => items.map((e) => CachcedPurchaseBill.mapToDomain(e)).toList());
+  Stream<List<PurchaseBill>> getBills() => cache.getBills().map((items) {
+        page = (items.length / pageSize).floor();
+        return items.map((e) => CachcedPurchaseBill.mapToDomain(e)).toList();
+      });
 
   @override
   Future<Result<bool>> updateBills(int billId, PurchaseBillRequest request) {
@@ -71,7 +73,6 @@ class PurchaseBillRepository implements IPurchaseBillRepository {
     final response = await remote
         .getBills(page, pageSize, state)
         .handleRepository(apiBillsMapper);
-    page++;
     return response.when((error) => Result.Error(error.message), (data) {
       cache.insertBills(
           data.map((e) => CachcedPurchaseBill.fromDomain(e)).toList());

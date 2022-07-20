@@ -22,16 +22,11 @@ class BillViewModel extends ViewModel {
     _getBills();
   }
 
-  @override
-  void init() {
-    loadBills();
-    super.init();
-  }
-
   void _getBills() {
     _repo.getBills().listen((event) {
       _viewState.add(_viewState.value
           .updateBills(event.map((e) => _fromDomain(e)).toList()));
+      if (event.isEmpty) loadBills();
     });
   }
 
@@ -43,7 +38,6 @@ class BillViewModel extends ViewModel {
       _viewState.add(_viewState.value.updateError(error));
     }, (data) {
       _listEnd = !data;
-      _viewState.add(_viewState.value.updateLoading(loading: false));
     });
   }
 

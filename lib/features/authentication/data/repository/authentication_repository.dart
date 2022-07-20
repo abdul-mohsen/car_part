@@ -30,16 +30,14 @@ class AuthenticatoinRepository implements IAuthenticationRepository {
   @override
   Future<Result<void>> login(ApiLoginRequest request) async {
     try {
-      final response = await _remote.login(request);
-      if (response.data != null) {
-        final domain = _apiLoginMapper(response.data!);
+      final result = (await _remote.login(request)).toResult();
+      result.when((error) => null, (data) {
+        final domain = _apiLoginMapper(result.data!);
         _appPref.setString(AppPref.accessToken, domain.accessToken);
         _appPref.setString(AppPref.refreshToken, domain.refreshToken);
         _appPref.setCacheMeter(cacheMeterkey);
-        return Result.Success(null);
-      } else {
-        return Result.Error(null);
-      }
+      });
+      return result;
     } catch (error) {
       return Result.Error(null);
     }

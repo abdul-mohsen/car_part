@@ -1,6 +1,7 @@
+import 'package:car_part/common/network/errors/app_error.dart';
 import 'package:car_part/common/ui/loading_dailog.dart';
 import 'package:car_part/common/ui/view_model.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'dart:async';
 import 'package:car_part/common/routing/route.dart';
@@ -143,4 +144,17 @@ abstract class ViewState<V extends View, VM extends ViewModel> extends State<V>
       LoadingScreen().hide();
     }
   }
+
+  void showError(UiError error) => showDialog(
+        context: context,
+        builder: (_) => _createDialog(title: error.message),
+        barrierDismissible: true,
+      );
+
+  AlertDialog _createDialog({
+    String? title,
+  }) =>
+      AlertDialog(
+        title: Text(title ?? "-"),
+      );
 }

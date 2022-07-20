@@ -39,7 +39,7 @@ class BillViewState {
   static BillViewState initViewState() =>
       BillViewState.creat(null, null, null, null, null);
 
-  BillViewState updateLoading({loading = false}) =>
+  BillViewState updateLoading({loading = true}) =>
       copy(loading: Event(loading));
 
   BillViewState updateError(UiError error) =>
