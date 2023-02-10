@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-extension NullableStringExtention on Widget {
+extension WigetExt on Widget {
   Padding addPadding(double value) =>
       Padding(padding: EdgeInsets.all(value), child: this);
 
@@ -15,7 +15,40 @@ extension NullableStringExtention on Widget {
           double maxWidth = double.infinity}) =>
       LimitedBox(maxHeight: maxHeight, maxWidth: maxWidth, child: this);
 
-  Container addContainer() => Container(
+  Container addContainer({
+    Key? key,
+    AlignmentGeometry? alignment,
+    EdgeInsetsGeometry? padding,
+    Color? color,
+    Decoration? decoration,
+    Decoration? foregroundDecoration,
+    double? width,
+    double? height,
+    BoxConstraints? constraints,
+    EdgeInsetsGeometry? margin,
+    Matrix4? transform,
+    AlignmentGeometry? transformAlignment,
+    Clip clipBehavior = Clip.none,
+  }) =>
+      Container(
+        key: key,
+        color: color,
+        child: this,
+      );
+
+  SizedBox addSizedBox({double? width}) => SizedBox(width: width, child: this);
+
+  Align addAlign({
+    Key? key,
+    AlignmentGeometry alignment = Alignment.center,
+    double? widthFactor,
+    double? heightFactor,
+  }) =>
+      Align(
+        key: key,
+        alignment: alignment,
+        widthFactor: widthFactor,
+        heightFactor: heightFactor,
         child: this,
       );
 }

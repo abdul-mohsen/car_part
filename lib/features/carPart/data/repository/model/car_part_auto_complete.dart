@@ -21,4 +21,7 @@ class CarPartAutoComplete extends Equatable {
 
   @override
   List<Object?> get props => [id, oemNumber];
+
+  @override
+  String toString() => oemNumber;
 }

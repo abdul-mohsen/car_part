@@ -1,4 +1,5 @@
 import 'package:car_part/common/extention/any_extension.dart';
+import 'package:car_part/common/ui/const_color.dart';
 import 'package:car_part/common/ui/view.dart';
 import 'package:car_part/common/widget/custom_scaffold.dart';
 import 'package:car_part/common/widget/edit_text.dart';
@@ -182,25 +183,43 @@ class BillDetailsState
       ];
 
   Widget _createDialog() => AlertDialog(
-        title: const Text("Product"),
-        actions: const [
-          TextButton(
-            onPressed: null,
-            child: Text("cancel"),
-          ),
-          TextButton(onPressed: null, child: Text("ok"))
-        ],
-        content: Autocomplete<CarPartAutoComplete>(
-            optionsBuilder: (TextEditingValue textEditingValue) async {
+      title: const Text("Product"),
+      actions: const [
+        TextButton(
+          onPressed: null,
+          child: Text("cancel"),
+        ),
+        TextButton(onPressed: null, child: Text("ok"))
+      ],
+      content: Column(mainAxisSize: MainAxisSize.min, children: [
+        carPart(),
+      ]));
+
+  Autocomplete carPart() => Autocomplete<CarPartAutoComplete>(
+        optionsBuilder: (TextEditingValue textEditingValue) async {
           if (textEditingValue.text == '') {
             return [];
           }
           final result =
               await viewModel.autoCompleteList(textEditingValue.text);
           return result.data ?? [];
-        }, onSelected: (CarPartAutoComplete selection) {
+        },
+        onSelected: (CarPartAutoComplete selection) {
           viewModel.onSelecteProduct(selection);
           debugPrint('You just selected $selection');
-        }),
+        },
+        optionsViewBuilder: (context, onSelected, options) => ListView(
+          children: options
+              .map((e) => TextButton(
+                    onPressed: () => {onSelected(e)},
+                    child: Text(
+                      e.toString(),
+                    ),
+                  ))
+              .toList(),
+        )
+            .addSizedBox(width: 250)
+            .addContainer(color: ConstColor.white)
+            .addAlign(alignment: Alignment.topLeft),
       );
 }

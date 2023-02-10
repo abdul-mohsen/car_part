@@ -1,8 +1,6 @@
 import 'package:car_part/features/bill/data/remote/model/response/api_bill_response/api_bill_item.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-import 'api_bill_item.dart';
-
 part 'api_bill_response.g.dart';
 
 @JsonSerializable()

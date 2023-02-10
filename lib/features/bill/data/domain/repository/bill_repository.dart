@@ -1,7 +1,6 @@
 import 'package:car_part/common/domain/result.dart';
 import 'package:car_part/common/extention/any_extension.dart';
 import 'package:car_part/common/extention/future_extention.dart';
-import 'package:car_part/common/ui/event.dart';
 import 'package:car_part/features/bill/data/domain/model/bill.dart';
 import 'package:car_part/features/bill/data/domain/model/bill_details.dart';
 import 'package:car_part/features/bill/data/domain/repository/bill_repository_abs.dart';
