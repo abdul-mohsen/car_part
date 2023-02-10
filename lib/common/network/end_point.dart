@@ -9,4 +9,5 @@ class EndPoints {
   static const String bills = "/bills";
   static const String productQuantity = "/product/quantity";
   static const String purchaseRegister = "/bills/purchase_register";
+  static const String carsSearch = "/cars/search";
 }

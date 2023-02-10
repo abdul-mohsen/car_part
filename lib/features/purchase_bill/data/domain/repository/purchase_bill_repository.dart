@@ -68,7 +68,6 @@ class PurchaseBillRepository implements IPurchaseBillRepository {
       api.toDomain();
 
   @override
-  @override
   Future<Result<bool>> loadMoreBills(int state) async {
     final response = await remote
         .getBills(page, pageSize, state)
