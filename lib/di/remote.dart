@@ -3,6 +3,7 @@ import 'package:car_part/features/authentication/data/remote/source/authenticati
 import 'package:car_part/features/bill/data/remote/source/bill_remote.dart';
 import 'package:car_part/features/carPart/data/remote/source/car_part_remote.dart';
 import 'package:car_part/features/purchase_bill/data/remote/source/purchase_bill_remote.dart';
+import 'package:car_part/features/search/data/remote/source/car_search_remote.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 List<Bind> remoteInjection() {
@@ -12,6 +13,7 @@ List<Bind> remoteInjection() {
     Bind.singleton((i) => CarPartClient()),
     Bind.singleton((i) => AuthenticationRemote()),
     Bind.singleton((i) => BillRemote()),
+    Bind.singleton((i) => CarSearchRemoteImpl()),
     Bind.singleton((i) => PurchaseBillRemote())
   ];
 }

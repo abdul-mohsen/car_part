@@ -32,7 +32,7 @@ class CarSearchItemResponse {
       id: json['id'] as int?,
       modelId: json['modelId'] as int?,
       modelName: json['modelName'] as String?,
-      yearOfConstructionTo: json['yearOfConstructionTo'] as int,
+      yearOfConstructionTo: json['yearOfConstructionTo'] as int?,
       yearOfConstructionFrom: json['yearOfConstructionFrom'] as int?,
       linkingTargetType: json['linkingTargetType'] as String?,
       manuId: json['manuId'] as int?,

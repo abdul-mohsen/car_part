@@ -1,7 +1,7 @@
 import 'package:car_part/common/domain/result.dart';
 import 'package:car_part/common/extention/debug.dart';
 import 'package:car_part/common/ui/view_model.dart';
-import 'package:car_part/features/carPart/data/repository/car_part_repository_abs.dart';
+import 'package:car_part/features/carPart/data/repository/car_part_repository.dart';
 import 'package:car_part/features/carPart/data/repository/model/car_part_auto_complete.dart';
 import 'package:car_part/features/purchase_bill/data/domain/model/purchase_bill_details.dart';
 import 'package:car_part/features/purchase_bill/data/domain/model/purchase_bill_product.dart';
@@ -11,6 +11,8 @@ import 'package:car_part/features/purchase_bill/data/remote/model/request/purcha
 import 'package:car_part/features/purchase_bill/ui/details/model/purchase_bill_details_navigation.dart';
 import 'package:car_part/features/purchase_bill/ui/details/model/purchase_bill_details_view_state.dart';
 import 'package:car_part/features/purchase_bill/ui/details/model/ui_purchase_bill_details_view.dart';
+import 'package:car_part/features/search/data/repository/car_search_repository.dart';
+import 'package:car_part/features/search/data/repository/model/car_search_result.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -20,7 +22,7 @@ class PurchaseBillDetailsViewModel extends ViewModel {
   Stream<PurchaseBillDetailsViewState> get viewState => _viewState;
 
   final _repo = Modular.get<IPurchaseBillRepository>();
-  final _carPartAutoCompleteRepo = Modular.get<ICarPartRepository>();
+  final _carPartAutoCompleteRepo = Modular.get<CarSearchRepository>();
   String? supplierId;
   String? supplierSequenceNumber;
   @override
@@ -96,8 +98,8 @@ class PurchaseBillDetailsViewModel extends ViewModel {
     _viewState.add(_viewState.value.onDeleteProdcut(productId));
   }
 
-  Future<Result<List<CarPartAutoComplete>>> autoCompleteList(String query) =>
-      _carPartAutoCompleteRepo.getCarPartAutoCompletelist(query);
+  Future<Result<List<CarSearchResult>>> autoCompleteList(String query) =>
+      _carPartAutoCompleteRepo.search(query);
 
   void onSelecteProduct(CarPartAutoComplete part) {
     PurchaseBillProduct product = PurchaseBillProduct(

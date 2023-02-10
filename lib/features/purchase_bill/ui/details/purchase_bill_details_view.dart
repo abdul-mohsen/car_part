@@ -9,6 +9,7 @@ import 'package:car_part/features/purchase_bill/ui/details/model/purchase_bill_d
 import 'package:car_part/features/purchase_bill/ui/details/model/purchase_bill_details_view_state.dart';
 import 'package:car_part/features/purchase_bill/ui/details/model/ui_purchase_bill_details_view.dart';
 import 'package:car_part/features/purchase_bill/ui/details/purchase_bill_details_view_model.dart';
+import 'package:car_part/features/search/data/repository/model/car_search_result.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -176,17 +177,19 @@ class PurchaseBillDetailsState
           ),
           TextButton(onPressed: null, child: Text("ok"))
         ],
-        content: Autocomplete<CarPartAutoComplete>(
-            optionsBuilder: (TextEditingValue textEditingValue) async {
-          if (textEditingValue.text == '') {
-            return [];
-          }
-          final result =
-              await viewModel.autoCompleteList(textEditingValue.text);
-          return result.data ?? [];
-        }, onSelected: (CarPartAutoComplete selection) {
-          viewModel.onSelecteProduct(selection);
-          debugPrint('You just selected $selection');
-        }),
+        content: Autocomplete<CarSearchResult>(
+          optionsBuilder: (TextEditingValue textEditingValue) async {
+            if (textEditingValue.text == '') {
+              return [];
+            }
+            final result =
+                await viewModel.autoCompleteList(textEditingValue.text);
+            return result.data ?? [];
+          },
+          onSelected: (CarSearchResult selection) {
+            debugPrint('You just selected $selection');
+          },
+          displayStringForOption: (option) => option.modelName,
+        ),
       );
 }
